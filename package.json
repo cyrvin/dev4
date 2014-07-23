@@ -1,0 +1,23 @@
+{
+  "name": "Dev4",
+  "version": "0.0.0",
+  "description": "",
+  "main": "web.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cyrvin/dev4.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cyrvin/dev4/issues"
+  },
+  "homepage": "https://github.com/cyrvin/dev4",
+  "dependencies": {
+    "express": "^4.6.1",
+    "logfmt": "^1.1.2"
+  }
+}
