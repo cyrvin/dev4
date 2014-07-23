@@ -2,7 +2,6 @@
 var express = require("express");
 var logfmt 	= require("logfmt");
 var pg 		= require('pg');
-
 var request = require('request');
 var cheerio = require('cheerio');
 
