@@ -1,12 +1,12 @@
 // web.js
 var express = require("express");
 var logfmt 	= require("logfmt");
-var pg 		= require('pg');
+//var pg 		= require('pg');
 var request = require('request');
 var cheerio = require('cheerio');
 
 var app = express();
-var DATABASE_URL = 'postgres://vfqplevrmxaqlr:dgYZcJgTzSlnFXjmEzFIeBDCRe@ec2-54-204-36-244.compute-1.amazonaws.com:5432/d6in99hc89dtc3';
+//var DATABASE_URL = 'postgres://xirltryzxcpdls:yRStNpzO4hmyAvJV5TOZ92mDqY@ec2-54-197-241-95.compute-1.amazonaws.com:5432/daqgo67bqvvbal';
 
 app.use(logfmt.requestLogger());
 
@@ -32,49 +32,9 @@ app.listen(port, function() {
 	console.log("Listening on " + port);
 });
 
-function isStoredInDatabase(publicUrl) {
-	/*console.log('isStoredInDatabase - step 1');
-
-	pg.connect(process.env.DATABASE_URL, function(err, client) {
-		var query = client.query('SELECT publicUrl FROM CONNECTIONS WHERE publicUrl = ' + publicUrl);
-
-		query.on('row', function(row) {
-			console.log('row : ', row);
-			return true;
-		});
-	});*/
-	return false;
-};
-
-function getSkillsFromDatabase(publicUrl, callback) {
-/*	var skills = [];
-	pg.connect(process.env.DATABASE_URL, function(err, client) {
-		var query = client.query('SELECT skill FROM CONNECTIONS WHERE publicUrl = ' + publicUrl);
-		query.on('row', function(row) {
-			skills.push(JSON.stringify(row));
-		});
-	});
-*/	callback(true, undefined);
-};
-
 function getSkillsFromPublicUrl(publicUrl, callback) {
 
-	getSkillsFromDatabase(publicUrl, function(error, skills)  {
-
-		if(skills)
-			callback(null, skills)
-		else{
-			var params = {publicUrl: publicUrl};
-			getSkillsFromScrapping(params, callback);
-		}
-	});
-};
-
-function getSkillsFromScrapping(params, callback) {
-
-	var url = params.publicUrl;
-
-	request(url, function(error, response, html) {
+	request(publicUrl, function(error, response, html) {
 
 		if (error) 
 			callback(error);
@@ -88,5 +48,3 @@ function getSkillsFromScrapping(params, callback) {
 		}
 	});
 };
-
-
