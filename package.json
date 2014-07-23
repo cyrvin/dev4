@@ -17,7 +17,12 @@
   },
   "homepage": "https://github.com/cyrvin/dev4",
   "dependencies": {
+    "async": "^0.9.0",
+    "cheerio": "^0.17.0",
     "express": "^4.6.1",
-    "logfmt": "^1.1.2"
+    "jsonfile": "^1.2.0",
+    "logfmt": "^1.1.2",
+    "pg": "2.x",
+    "request": "^2.38.0"
   }
 }

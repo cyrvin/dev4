@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+</head>
+<body>
+  <script>
+
+function myFirstQuery() {
+  var service_url = 'http://localhost:5000/connection/?puburl=https://www.linkedin.com/in/cyrillevincey';
+  var params = {
+    'puburl': 'https://www.linkedin.com/in/cyrillevincey',
+  };
+
+
+  $.ajax({
+	  dataType: "json",
+	  url: service_url,
+	  success: function(response, body){
+	  	console.log(body);
+	  },
+	  error: function(error){
+	  	console.log(error);
+	  }
+	});
+
+};
+
+myFirstQuery();
+
+</script>
+</body>
+</html>
