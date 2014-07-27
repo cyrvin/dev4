@@ -21,7 +21,7 @@ console.log("Registering endpoint: /connection");
 app.get('/connection/', function(req, res){
 	var publicUrl = req.query.puburl;
 
-	getSkillsFromPublicUrl(publicUrl, function(error, skills){
+	getSkillsFromPublicUrl(publicUrl, function(skills){
 		console.log(skills);
 		res.send(skills);
 	});
@@ -45,7 +45,7 @@ function getSkillsFromPublicUrl(publicUrl, callback) {
 			$('#profile-skills .content .skills li .jellybean').each(function(i, skill) {
 				skills.push($(this).text().replace(/\s+/g, " ").trim());				
 			});
-			callback(error,skills);
+			callback(skills);
 		}
 	});
 };

@@ -4,15 +4,18 @@ var request = require('request');
 var cheerio = require('cheerio');
 var pg 		= require('pg');
 
+//var DATABASE_URL = 'postgres://xirltryzxcpdls:yRStNpzO4hmyAvJV5TOZ92mDqY@ec2-54-197-241-95.compute-1.amazonaws.com:5432/daqgo67bqvvbal';
+//var databaseUrl = process.env.DATABASE_URL || DATABASE_URL;
+
 var DATABASE_URL = 'postgresql://cyrillevincey@localhost/cyrillevincey'
-var databaseUrl = process.env.DATABASE_URL || DATABASE_URL;
+var databaseUrl = DATABASE_URL;
 
 var app = express();
 
 app.use(logfmt.requestLogger());
 
 app.get('/', function(req, res) {
-	getActivitiesFromCompanyPage('http://fr.kompass.com/c/alfa-concept-mecanique/fr8536783/');
+	getActivitiesFromCompanyPage('http://fr.kompass.com/c/schunk-intec-sarl/fr8394169/');
 });
 
 var port = Number(process.env.PORT || 5000);
@@ -22,6 +25,7 @@ app.listen(port, function() {
 });
 
 function getActivitiesFromCompanyPage(companyUrl) {
+
 	request(companyUrl, function(error, response, html) {
 		var $ = cheerio.load(html);
 		scrapeActivities($, '#mainActivitiesTree > ul > li > a', 'primary', companyUrl);
@@ -31,14 +35,16 @@ function getActivitiesFromCompanyPage(companyUrl) {
 
 function scrapeActivities($, path, rank, companyUrl) {
 	$(path).each(function() {
-		var parentActivity = processActivity($(this), rank, null, companyUrl, writeCompanyActivity);
+		var parentActivity = processActivity($(this), rank, null);
+		writeCompanyActivity(parentActivity, companyUrl);
 		$(this).parent().find('ul').find('li').find('a').each(function() {
-			var childActivity = processActivity($(this), rank, parentActivity.url, companyUrl, writeCompanyActivity);
+			var childActivity = processActivity($(this), rank, parentActivity.url);
+			writeCompanyActivity(childActivity, companyUrl);
 		});
 	});
 }
 
-function processActivity(dollarThis, rank, parentUrl, companyUrl, writeCompanyActivity) {
+function processActivity(dollarThis, rank, parentUrl) {
 	var activity = {};
 
 	activity.rank = rank;
@@ -50,8 +56,6 @@ function processActivity(dollarThis, rank, parentUrl, companyUrl, writeCompanyAc
 	var roleAndLabel = parseRoleAndLabel(label);
 	activity.label = roleAndLabel.label;
 	activity.role = roleAndLabel.role;
-
-	writeCompanyActivity(activity, companyUrl);
 
 	return activity;
 }
@@ -85,8 +89,8 @@ function writeCompanyActivity(activity, companyUrl) {
 				if (err) {
 					console.log(err);}
 				else {
-					console.log('row inserted for ' + activity.url);}
-				done();
+					console.log('row inserted for ' + companyUrl + ' ' + activity.url);}
+				client.end();
 			});        
 	});
 }
