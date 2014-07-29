@@ -3,12 +3,13 @@ var logfmt 	= require("logfmt");
 var request = require('request');
 var cheerio = require('cheerio');
 var pg 		= require('pg');
+var async	= require('async');
 
 var DATABASE_URL = 'postgresql://cyrillevincey@localhost/cyrillevincey'
 var databaseUrl = process.env.DATABASE_URL || DATABASE_URL;
 var nbEntriesPerPage = 80;
 var nbRowsPerIteration = 10;
-
+var maxQueueConcurrency = 5;
 var app = express();
 
 app.use(logfmt.requestLogger());
@@ -37,11 +38,11 @@ app.get('/step2-fetch-activities-from-nomenclature/', function(req, res) {
 });
 
 app.get('/step3-fetch-companies-from-activity/', function(req, res) {
-	selectAndProcessUnscrapedRowsByN('activities', 'activityUrl', scrapeCompaniesFromActivityPage);
+	iterateOnActivityPages();
 });
 
 app.get('/step4-scrape-company-page/', function(req, res) {
-	selectAndProcessUnscrapedRowsByN('companies', 'companyUrl', scrapeCompanyPage);
+	iterateOnCompanyPages();
 });
 
 /*------------------- GET ACTIVIVITES FROM NOMENCLATURE PAGE ------------------*/
@@ -63,32 +64,61 @@ function getActivityFromNomenclaturePage(nomenclatureUrl) {
 	});
 }
 
-function iterateOverScrapableItems(table, field) {
+function iterateOnCompanyPages() {
+	var q = async.queue(function (companyUrl, updateItemAsScraped) {
+		console.log("Scraping company " + companyUrl);
+		scrapeCompanyPage2(companyUrl, updateItemAsScraped);
+	}, maxQueueConcurrency);
 
-}
+	q.drain = function() {
+		console.log('All Company pages have been scraped');
+	}
 
-function selectAndProcessUnscrapedRowsByN(table, field, callback) {
 	pg.connect(databaseUrl, function(err, client, done) {
-		client.query('SELECT ' + field + ' FROM ' + table + ' WHERE scraped = false LIMIT ' + nbRowsPerIteration, function(err, result) {
+		client.query('SELECT companyUrl FROM companies WHERE scraped = false', function(err, result) {
 			done();
 			if (err) return console.error(err);
 
 			result.rows.forEach(function(row) {
-				var rowId = row[field.toLowerCase()];
-				callback(rowId);
-				updateItemAsScraped(table, field, rowId);
+				var companyUrl = row[field.toLowerCase()];
+				console.log('Adding to queue ' + companyUrl);
+				q.push(companyUrl);
+			});
+		});
+	});
+}
+
+function iterateOnActivityPages() {
+	var q = async.queue(scrapeCompaniesFromActivityPage, maxQueueConcurrency);
+
+	q.drain = function() {
+		console.log('All activity pages have been scraped');
+	}
+
+	pg.connect(databaseUrl, function(err, client, done) {
+		client.query('SELECT activityUrl FROM activities WHERE activityUrl NOT IN (SELECT DISTINCT activityUrl FROM activityCompanies)', 
+			function(err, result) {
+			done();
+			if (err) return console.error(err);
+
+			result.rows.forEach(function(row) {
+				var activityUrl = row['activityurl'];
+				console.log('Adding to queue ' + activityUrl);
+				q.push(activityUrl);
 			});
 		});
 	});
 }
 
 /*------------------- GET COMPANIES FROM ACTIVITY PAGE ------------------*/
-function scrapeCompaniesFromActivityPage(activityUrl) {
+function scrapeCompaniesFromActivityPage(activityUrl, callback) {
+	console.log('Scraping activity page : ' + activityUrl);
+
 	request(activityUrl, function(error, response, html) {
 		var $ = cheerio.load(html);
 
 		$('#selectionForm > div > a').each(function() {
-			insertSingleValueIfNotExist('Companies', 'companyUrl', $(this).attr('href'));
+			insertDoubleValues('activityCompanies', 'activityUrl', activityUrl, 'companyUrl', $(this).attr('href'));
 		});
 
 		var resultCount = + $('#result-count > strong').text();
@@ -97,7 +127,7 @@ function scrapeCompaniesFromActivityPage(activityUrl) {
 			scrapeCompaniesFromActivityPageNextPages(activityUrl, i);			
 		}
 
-		updateItemAsScraped('activities', 'activityUrl', activityUrl);
+		callback('activities', 'activityUrl', activityUrl);
 	});
 }
 
@@ -106,7 +136,7 @@ function scrapeCompaniesFromActivityPageNextPages(activityUrl, pageNumber) {
 	request(activityUrlWithPageNumber, function(error, response, html) {
 		var $ = cheerio.load(html);
 		$('#selectionForm > div > a').each(function() {
-			insertSingleValueIfNotExist('Companies', 'companyUrl', $(this).attr('href'));
+			insertDoubleValues('activityCompanies', 'activityUrl', activityUrl, 'companyUrl', $(this).attr('href'));
 		});
 	});
 }
@@ -117,6 +147,15 @@ function scrapeCompanyPage(companyUrl) {
 		var $ = cheerio.load(html);
 		scrapeActivitiesFromCompanyPage($, '#mainActivitiesTree > ul > li > a', 'primary', companyUrl);
 		scrapeActivitiesFromCompanyPage($, '#secondaryActivitiesTree > ul > li > a', 'secondary', companyUrl);
+	});
+}
+
+function scrapeCompanyPage2(companyUrl, callback) {
+	request(companyUrl, function(error, response, html) {
+		var $ = cheerio.load(html);
+		scrapeActivitiesFromCompanyPage($, '#mainActivitiesTree > ul > li > a', 'primary', companyUrl);
+		scrapeActivitiesFromCompanyPage($, '#secondaryActivitiesTree > ul > li > a', 'secondary', companyUrl);
+		callback('companies', 'companyUrl', companyUrl);
 	});
 }
 

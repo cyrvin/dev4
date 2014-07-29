@@ -26,6 +26,14 @@ create table companyDetails (
 	ca2013 		integer
 );
 
+create table activityCompanies (
+	activityUrl	varchar(200),
+	companyUrl	varchar(200)
+)
+
+create index on activityCompanies (activityUrl);
+create index on activityCompanies (companyUrl);
+
 create table companyActivities (
 	companyUrl 	varchar(200),
 	rank 		varchar(10),
