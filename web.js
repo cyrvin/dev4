@@ -7,6 +7,7 @@ var pg 		= require('pg');
 var DATABASE_URL = 'postgresql://cyrillevincey@localhost/cyrillevincey'
 var databaseUrl = process.env.DATABASE_URL || DATABASE_URL;
 var nbEntriesPerPage = 80;
+var nbRowsPerIteration = 10;
 
 var app = express();
 
@@ -25,26 +26,22 @@ app.get('/', function(req, res) {
 	res.render('index.html');
 });
 
-/*------------------- ROUTES ------------------*/
-
-app.get('/companypage/', function(req, res) {
-	getActivitiesFromCompanyPage('http://fr.kompass.com/c/alfa-concept-mecanique/fr8536783/');
-});
-
-app.get('/activitypage/', function(req, res) {
-	getCompaniesFromActivityPage('http://fr.kompass.com/a/architectes-d-interieur/8410032/');
-});
-
-app.get('/nomenclature/', function(req, res) {
-	getActivityFromNomenclaturePage('http://fr.kompass.com/n/energie-environnement/03/');
-});
+/*------------------- SCRAPING ROUTES ------------------*/
 
 app.get('/step1-fetch-nomenclature-from-highest-level/', function(req, res) {
 	getNomenclatureGeneral('http://fr.kompass.com/showNomenclature/');
 });
 
 app.get('/step2-fetch-activities-from-nomenclature/', function(req, res) {
-	selectAndProcessUnscrapedRowsByN('nomenclature', 'nomenclatureUrl', 10, getActivityFromNomenclaturePage);
+	selectAndProcessUnscrapedRowsByN('nomenclature', 'nomenclatureUrl', getActivityFromNomenclaturePage);
+});
+
+app.get('/step3-fetch-companies-from-activity/', function(req, res) {
+	selectAndProcessUnscrapedRowsByN('activities', 'activityUrl', scrapeCompaniesFromActivityPage);
+});
+
+app.get('/step4-scrape-company-page/', function(req, res) {
+	selectAndProcessUnscrapedRowsByN('companies', 'companyUrl', scrapeCompanyPage);
 });
 
 /*------------------- GET ACTIVIVITES FROM NOMENCLATURE PAGE ------------------*/
@@ -52,7 +49,7 @@ function getNomenclatureGeneral(nomenclatureUrl) {
 	request(nomenclatureUrl, function(error, response, html) {
 		var $ = cheerio.load(html);
 		$('#content > div > div > ul.categorie > li.span6 > a').each(function() {
-			writeSingleValue('Nomenclature', 'nomenclatureUrl', 'http://fr.kompass.com' + $(this).attr('href'));
+			insertSingleValue('Nomenclature', 'nomenclatureUrl', 'http://fr.kompass.com' + $(this).attr('href'));
 		});
 	});
 }
@@ -61,36 +58,55 @@ function getActivityFromNomenclaturePage(nomenclatureUrl) {
 	request(nomenclatureUrl, function(error, response, html) {
 		var $ = cheerio.load(html);
 		$('#content > div > div > div > div.tab-content.pull-right > div.tab-pane > ul > li > a').each(function() {
-			writeDoubleValues('Activities', 'activityUrl', $(this).attr('href'), 'label', $(this).text());
+			insertDoubleValues('Activities', 'activityUrl', $(this).attr('href'), 'label', $(this).text());
+		});
+	});
+}
+
+function iterateOverScrapableItems(table, field) {
+
+}
+
+function selectAndProcessUnscrapedRowsByN(table, field, callback) {
+	pg.connect(databaseUrl, function(err, client, done) {
+		client.query('SELECT ' + field + ' FROM ' + table + ' WHERE scraped = false LIMIT ' + nbRowsPerIteration, function(err, result) {
+			done();
+			if (err) return console.error(err);
+
+			result.rows.forEach(function(row) {
+				var rowId = row[field.toLowerCase()];
+				callback(rowId);
+				updateItemAsScraped(table, field, rowId);
+			});
 		});
 	});
 }
 
 /*------------------- GET COMPANIES FROM ACTIVITY PAGE ------------------*/
-function getCompaniesFromActivityPage(activityUrl) {
+function scrapeCompaniesFromActivityPage(activityUrl) {
 	request(activityUrl, function(error, response, html) {
 		var $ = cheerio.load(html);
 
 		$('#selectionForm > div > a').each(function() {
-			writeSingleValue('Companies', 'companyUrl', $(this).attr('href'));
+			insertSingleValueIfNotExist('Companies', 'companyUrl', $(this).attr('href'));
 		});
 
 		var resultCount = + $('#result-count > strong').text();
 		var nbPages = parseInt(resultCount / nbEntriesPerPage);
-		for (i = 2 ; i <= nbPages ; i++) {
-			getCompaniesFromActivityPageNextPages(activityUrl, i);			
+		for (var i = 2 ; i <= nbPages ; i++) {
+			scrapeCompaniesFromActivityPageNextPages(activityUrl, i);			
 		}
 
 		updateItemAsScraped('activities', 'activityUrl', activityUrl);
 	});
 }
 
-function getCompaniesFromActivityPageNextPages(activityUrl, pageNumber) {
+function scrapeCompaniesFromActivityPageNextPages(activityUrl, pageNumber) {
 	var activityUrlWithPageNumber = activityUrl + 'page-' + pageNumber + '/';
 	request(activityUrlWithPageNumber, function(error, response, html) {
 		var $ = cheerio.load(html);
 		$('#selectionForm > div > a').each(function() {
-			writeSingleValue('Companies', 'companyUrl', $(this).attr('href'));
+			insertSingleValueIfNotExist('Companies', 'companyUrl', $(this).attr('href'));
 		});
 	});
 }
@@ -99,21 +115,21 @@ function getCompaniesFromActivityPageNextPages(activityUrl, pageNumber) {
 function scrapeCompanyPage(companyUrl) {
 	request(companyUrl, function(error, response, html) {
 		var $ = cheerio.load(html);
-		scrapeActivities($, '#mainActivitiesTree > ul > li > a', 'primary', companyUrl);
-		scrapeActivities($, '#secondaryActivitiesTree > ul > li > a', 'secondary', companyUrl);
+		scrapeActivitiesFromCompanyPage($, '#mainActivitiesTree > ul > li > a', 'primary', companyUrl);
+		scrapeActivitiesFromCompanyPage($, '#secondaryActivitiesTree > ul > li > a', 'secondary', companyUrl);
 	});
 }
 
 function scrapeActivitiesFromCompanyPage($, path, rank, companyUrl) {
 	$(path).each(function() {
-		var parentActivity = processActivity($(this), rank, null, companyUrl, writeCompanyActivity);
+		var parentActivity = processActivity($(this), rank, null, companyUrl, insertCompanyActivity);
 		$(this).parent().find('ul').find('li').find('a').each(function() {
-			var childActivity = processActivity($(this), rank, parentActivity.url, companyUrl, writeCompanyActivity);
+			var childActivity = processActivity($(this), rank, parentActivity.url, companyUrl, insertCompanyActivity);
 		});
 	});
 }
 
-function processActivity(dollarThis, rank, parentUrl, companyUrl, writeCompanyActivity) {
+function processActivity(dollarThis, rank, parentUrl, companyUrl, callback) {
 	var activity = {};
 
 	activity.rank = rank;
@@ -126,7 +142,7 @@ function processActivity(dollarThis, rank, parentUrl, companyUrl, writeCompanyAc
 	activity.label = roleAndLabel.label;
 	activity.role = roleAndLabel.role;
 
-	writeCompanyActivity(activity, companyUrl);
+	callback(activity, companyUrl);
 
 	return activity;
 }
@@ -152,21 +168,20 @@ function parseRoleAndLabel(label) {
 }
 
 /*------------------- WRITE FUNCTIONS ------------------*/
-function writeCompanyActivity(activity, companyUrl) {
+function insertCompanyActivity(activity, companyUrl) {
 	pg.connect(databaseUrl, function(err, client, done) {
 		client.query(
-			'INSERT into CompanyActivities (companyUrl, rank, activityUrl, label, role, parentUrl) VALUES($1, $2, $3, $4, $5, $6)', 
-			[companyUrl, activity.rank, activity.url, activity.label, activity.role, activity.parentUrl], 
+			'INSERT into CompanyActivities (companyUrl, rank, activityUrl, role, parentUrl) VALUES($1, $2, $3, $4, $5)', 
+			[companyUrl, activity.rank, activity.url, activity.role, activity.parentUrl], 
 			function(err, result) {
-				if (err) return console.log(err);
-				console.log('row inserted for ' + activity.url);
-
 				done();
+				if (err) return console.log(err);
+				console.log('Company activity inserted for ' + activity.url);
 			});        
 	});
 }
 
-function writeSingleValue(table, field, value) {
+function insertSingleValue(table, field, value) {
 	pg.connect(databaseUrl, function(err, client, done) {
 		client.query(
 			'INSERT into ' + table + ' (' + field + ') VALUES($1)', 
@@ -174,12 +189,12 @@ function writeSingleValue(table, field, value) {
 			function(err, result) {
 				done();
 				if (err) return console.error(err);				
-				console.log('row inserted ' + value);
+				console.log('Row inserted ' + value);
 			});        
 	});
 }
 
-function writeDoubleValues(table, field1, value1, field2, value2) {
+function insertDoubleValues(table, field1, value1, field2, value2) {
 	pg.connect(databaseUrl, function(err, client, done) {
 		client.query(
 			'INSERT into ' + table + ' (' + field1 + ', ' + field2 + ') VALUES($1, $2)', 
@@ -187,32 +202,34 @@ function writeDoubleValues(table, field1, value1, field2, value2) {
 			function(err, result) {
 				done();
 				if (err) 	return console.error(err);				
-				console.log('row inserted ' + value1 + ' - ' + value2);
+				console.log('Row inserted ' + value1 + ' - ' + value2);
 			});        
-	});
-}
-
-function selectAndProcessUnscrapedRowsByN(table, field, nbRows, callback) {
-	pg.connect(databaseUrl, function(err, client, done) {
-		client.query('SELECT ' + field + ' FROM ' + table + ' WHERE scraped = false LIMIT ' + nbRows, function(err, result) {
-			done();
-			if (err) return console.error(err);
-			console.log('DEBUG: ', result.rows);
-
-			result.rows.forEach(function(row) {
-				callback(row[field.toLowerCase()]);
-			});
-		});
 	});
 }
 
 function updateItemAsScraped(table, field, itemId) {
 	pg.connect(databaseUrl, function(err, client, done) {
-		client.query('UPDATE ' + table  + ' SET scraped = true WHERE ' + field + ' = ' + itemId, function(err, result) {
-			done();
-			if (err) return console.error(err);
-			console.log('row marked as scraped: ', itemId);
-		});
+		client.query('UPDATE ' + table  + ' SET scraped = true WHERE ' + field + ' = $1', 
+			[itemId],
+			function(err, result) {
+				done();
+				if (err) return console.error(err);
+				console.log('row marked as scraped: ', itemId);
+			});
 	});	
+}
+
+function insertSingleValueIfNotExist(table, field, value) {
+	pg.connect(databaseUrl, function(err, client, done) {
+		client.query('SELECT * FROM ' + table + ' WHERE ' + field + ' = $1', 
+			[value],
+			function(err, result) {
+				done();
+				if (err) 					return console.error(err);
+				if (result.rowCount > 0) 	return console.log("Already here (no insert): ", value);
+				
+				insertSingleValue(table, field, value);
+			});
+	});
 }
 

@@ -30,5 +30,6 @@ create table companyActivities (
 	companyUrl 	varchar(200),
 	rank 		varchar(10),
 	activityUrl varchar(200),
+	parentUrl	varchar(200),
 	role 		varchar(1)
 );
