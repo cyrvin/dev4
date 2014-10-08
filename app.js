@@ -21,7 +21,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/test/', function(req, res) {
-	//WRITE CODE HERE
+	res.send(process.env.RDS_HOSTNAME);
 });
 
 /*--------------------------- SCRAP KOMPASS ---------------------------*/
