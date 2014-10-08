@@ -1,8 +1,9 @@
 var request = require('request');
 var cheerio = require('cheerio');
 var fs 		= require('fs');
-var readline = require('readline');
-var stream = require('stream');
+var readline= require('readline');
+var stream 	= require('stream');
+var AWS 	= require('aws-sdk');
 
 var nbEntriesPerPage = 80;
 

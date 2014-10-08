@@ -1,6 +1,7 @@
 var express = require("express");
 var Kompass = require('./kompass');
 var Europages = require('./europages');
+var mysql      = require('mysql');
 
 var app = express();
 
@@ -22,10 +23,10 @@ app.get('/', function(req, res) {
 });
 
 app.get('/test/', function(req, res) {
-	console.log('OK OK');
-	res.write('ok ok ');
-	var europages = new Europages();
-	europages.companyIndexScrap('http://www.europages.fr/annuaire-entreprises/index-entreprise_%7C_%7C.html');
+	res.send('-> Host : ' + process.env.RDS_HOSTNAME);
+	res.send('-> User : ' + process.env.RDS_USERNAME);
+	res.send('-> User : ' + process.env.RDS_PASSWORD);
+	res.send('-> Port : ' + process.env.RDS_PORT);
 });
 
 /*--------------------------- SCRAP KOMPASS ---------------------------*/
