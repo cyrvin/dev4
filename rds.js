@@ -18,7 +18,7 @@ DatabaseConnection.prototype.writeCompanyUrl = function(companyUrl) {
 		var value = {url: companyUrl};
 		db.query('INSERT IGNORE INTO companyUrls SET ? ', value, function(err, result) {
 			console.log('writeCompanyUrl -> OK on ' + companyUrl);
-		}):
+		});
 	});
 }
 
@@ -31,7 +31,7 @@ DatabaseConnection.prototype.writeCompanyUrls = function(companyUrls) {
 		var value = {url: companyUrl};
 		db.query('INSERT IGNORE INTO companyUrls SET ? ', value, function(err, result) {
 			console.log('writeCompanyUrl -> OK on ' + companyUrl);
-		}):
+		});
 	});
 }
 
