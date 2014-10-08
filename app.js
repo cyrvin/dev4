@@ -1,7 +1,6 @@
 var express = require("express");
 var Kompass = require('./kompass');
 var Europages = require('./europages');
-var mysql      = require('mysql');
 
 var app = express();
 
@@ -23,10 +22,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/test/', function(req, res) {
-	res.send('-> Host : ' + process.env.RDS_HOSTNAME);
-	res.send('-> User : ' + process.env.RDS_USERNAME);
-	res.send('-> User : ' + process.env.RDS_PASSWORD);
-	res.send('-> Port : ' + process.env.RDS_PORT);
+	//WRITE CODE HERE
 });
 
 /*--------------------------- SCRAP KOMPASS ---------------------------*/

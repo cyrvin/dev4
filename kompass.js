@@ -3,7 +3,7 @@ var cheerio = require('cheerio');
 var fs 		= require('fs');
 var readline= require('readline');
 var stream 	= require('stream');
-var AWS 	= require('aws-sdk');
+var Europages = require('./rds');
 
 var nbEntriesPerPage = 80;
 
@@ -70,9 +70,10 @@ function pageResultat(activityUrl) {
 	console.log('  -> Activity : ' + activityUrl);
 	request(activityUrl, function(error, response, html) {
 		var $ = cheerio.load(html);
+		var db = new DatabaseConnection();
 		$('#content .row .prod_list a').each(function() {
-			//streamCompanies.write(activityUrl  + ';' + $(this).attr('href') + '\n');
-			streamCompanies.write($(this).attr('href') + '\n');
+			//streamCompanies.write($(this).attr('href') + '\n');
+			db.writeCompanyUrl($(this).attr('href'));
 		});
 
 		$('#result-count > strong').each(function() {
@@ -92,9 +93,10 @@ function pageResultatNext(activityRootUrl, activityUrl) {
 	console.log('  -> Activity : ' + activityUrl);
 	request(activityUrl, function(error, response, html) {
 		var $ = cheerio.load(html);
+		var db = new DatabaseConnection();
 		$('#content .row .prod_list a').each(function() {
-			//streamCompanies.write(activityRootUrl  + ';' + $(this).attr('href') + '\n');
-			streamCompanies.write($(this).attr('href') + '\n');
+			//streamCompanies.write($(this).attr('href') + '\n');
+			db.writeCompanyUrl($(this).attr('href'));
 		});
 	});
 }
