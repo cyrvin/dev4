@@ -10,6 +10,7 @@ var db = mysql.createConnection({
 var DatabaseConnection = function(){};
 
 DatabaseConnection.prototype.writeCompanyUrl = function(companyUrl) {
+	var value = {url: companyUrl};
 	db.query('INSERT IGNORE INTO companyUrls SET ? ', value, function(err, result) {
 		if (err) {
 			console.log('writeCompanyUrl -> ERROR ON URL ' + companyUrl + ' : ' + err.stack); 
