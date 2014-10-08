@@ -3,7 +3,7 @@ var cheerio = require('cheerio');
 var fs 		= require('fs');
 var readline= require('readline');
 var stream 	= require('stream');
-var Europages = require('./rds');
+var Mydb = require('./rds');
 
 var nbEntriesPerPage = 80;
 
@@ -70,10 +70,10 @@ function pageResultat(activityUrl) {
 	console.log('  -> Activity : ' + activityUrl);
 	request(activityUrl, function(error, response, html) {
 		var $ = cheerio.load(html);
-		var db = new DatabaseConnection();
+		var mydb = new Mydb();
 		$('#content .row .prod_list a').each(function() {
 			//streamCompanies.write($(this).attr('href') + '\n');
-			db.writeCompanyUrl($(this).attr('href'));
+			mydb.writeCompanyUrl($(this).attr('href'));
 		});
 
 		$('#result-count > strong').each(function() {
@@ -93,10 +93,10 @@ function pageResultatNext(activityRootUrl, activityUrl) {
 	console.log('  -> Activity : ' + activityUrl);
 	request(activityUrl, function(error, response, html) {
 		var $ = cheerio.load(html);
-		var db = new DatabaseConnection();
+		var mydb = new Mydb();
 		$('#content .row .prod_list a').each(function() {
 			//streamCompanies.write($(this).attr('href') + '\n');
-			db.writeCompanyUrl($(this).attr('href'));
+			mydb.writeCompanyUrl($(this).attr('href'));
 		});
 	});
 }
