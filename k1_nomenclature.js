@@ -25,7 +25,6 @@ module.exports = KompassNomenclature;
 /*--------------------------- INTERNAL FUNCTIONS ---------------------------*/
 
 function pageNomenclatureN2(nomenclatureUrl) {
-	console.log('Nom2 : ' + nomenclatureUrl);
 	request(nomenclatureUrl, function(error, response, html) {
 		var $ = cheerio.load(html);
 		$('#content > div > div > div > div.tab-content.pull-right > div.tab-pane > ul > li > a').each(function() {

@@ -8,15 +8,13 @@ var nbEntriesPerPage = 80;
 /*--------------------------- KompassActivity class ---------------------------*/
 
 module.exports = function(activityUrl, callback) {
-	console.log('  -> Activity : ' + activityUrl);
 	request(activityUrl, function(error, response, html) {
 		var $ = cheerio.load(html);
 		$('#content .row .prod_list a').each(function() {
 			insertIgnoreWorkers($(this).attr('href'), function(err, companyUrl){
-				if (err) console.log(err)
-				else console.log('OK Insert ' + companyUrl);
+				if (err) console.log('ERROR insert' + err)
+				else console.log('OK insert ' + companyUrl);
 			});
-			console.log($(this).attr('href'));
 		});
 
 		$('#result-count > strong').each(function() {
@@ -36,14 +34,12 @@ module.exports = function(activityUrl, callback) {
 /*--------------------------- Internal functions ---------------------------*/
 
 function activityPageNext(activityRootUrl, activityUrl) {
-	console.log('  -> Activity : ' + activityUrl);
 	request(activityUrl, function(error, response, html) {
 		var $ = cheerio.load(html);
-		var mydb = new Mydb();
 		$('#content .row .prod_list a').each(function() {
 			insertIgnoreWorkers($(this).attr('href'), function(err, companyUrl){
-				if (err) console.log(err)
-				else console.log('OK Insert ' + companyUrl);
+				if (err) console.log('ERROR insert' + err)
+				else console.log('OK insert ' + companyUrl);
 			});
 		});
 	});
