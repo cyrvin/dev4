@@ -8,9 +8,9 @@ var db = mysql.createConnection({
 	database : 'ebdb'
 });
 
-module.exports = function(tableName, fieldName, fieldValue, callback) {
-	var value = {fieldName: fieldValue};
-	db.query('INSERT IGNORE INTO ' + tableName + ' SET ? ', value, function(err, result) {
+module.exports = function(fieldValue, callback) {
+	var value = {url: fieldValue};
+	db.query('INSERT IGNORE INTO companyUrls SET ? ', value, function(err, result) {
 		if (err) 	callback(err, fieldValue)
 	 	else 		callback(null, fieldValue);
 	});

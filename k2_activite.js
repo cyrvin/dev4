@@ -12,7 +12,7 @@ module.exports = function(activityUrl, callback) {
 	request(activityUrl, function(error, response, html) {
 		var $ = cheerio.load(html);
 		$('#content .row .prod_list a').each(function() {
-			insertIgnoreWorkers('companyUrls', 'url', $(this).attr('href'), function(err, companyUrl){
+			insertIgnoreWorkers($(this).attr('href'), function(err, companyUrl){
 				if (err) console.log(err)
 				else console.log('OK Insert ' + companyUrl);
 			});
@@ -41,7 +41,7 @@ function activityPageNext(activityRootUrl, activityUrl) {
 		var $ = cheerio.load(html);
 		var mydb = new Mydb();
 		$('#content .row .prod_list a').each(function() {
-			insertIgnoreWorkers('companyUrls', 'url', $(this).attr('href'), function(err, companyUrl){
+			insertIgnoreWorkers($(this).attr('href'), function(err, companyUrl){
 				if (err) console.log(err)
 				else console.log('OK Insert ' + companyUrl);
 			});
