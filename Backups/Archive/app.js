@@ -1,5 +1,6 @@
 var express = require("express");
-var KompassNomenclature = require('./k1_nomenclature');
+var Kompass = require('./kompass');
+var Europages = require('./europages');
 
 var app = express();
 
@@ -31,8 +32,8 @@ app.get('/kompass/scrapnomenclature/', function(req, res) {
 		return;
 	}
 
-	var kompass = new KompassNomenclature();
-	kompass.nomenclaturePage(req.query.country);
+	var kompass = new Kompass();
+	kompass.pageNomenclature(req.query.country);
 });
 
 app.get('/kompass/scrapcompanies/', function(req, res) {
@@ -45,3 +46,4 @@ app.get('/kompass/scrapcompanies/', function(req, res) {
 	kompass.iterateOnCompanyPages(req.query.country);
 });
 
+/*--------------------------- SCRAP EUROPAGES --------------------------- */

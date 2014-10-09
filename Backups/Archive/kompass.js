@@ -3,18 +3,13 @@ var cheerio = require('cheerio');
 var fs 		= require('fs');
 var readline= require('readline');
 var stream 	= require('stream');
-var Mydb = require('./rds');
+
+//WORKER FOR RDS ACCESS
+var workerFarm = require('worker-farm')
+var myDBworkers = workerFarm(require.resolve('./rds'));
+//var Mydb = require('./rds');
 
 var nbEntriesPerPage = 80;
-
-var streamCompanies 	= undefined;
-var streamAddress 		= undefined;
-var streamPresentation 	= undefined;
-var streamGeneral	 	= undefined;
-var streamFigures	 	= undefined;
-var streamTel 			= undefined;
-var streamActivities 	= undefined;
-var streamContacts	 	= undefined;
 
 /*------------------- CLASSE KOMPASS ----------------------------*/
 
@@ -70,10 +65,12 @@ function pageResultat(activityUrl) {
 	console.log('  -> Activity : ' + activityUrl);
 	request(activityUrl, function(error, response, html) {
 		var $ = cheerio.load(html);
-		var mydb = new Mydb();
+		// var mydb = new Mydb();
+
 		$('#content .row .prod_list a').each(function() {
 			//streamCompanies.write($(this).attr('href') + '\n');
-			mydb.writeCompanyUrl($(this).attr('href'));
+			//mydb.writeCompanyUrl($(this).attr('href'));
+			myDBworkers.writeCompanyUrl($(this).attr('href'));
 		});
 
 		$('#result-count > strong').each(function() {
@@ -96,7 +93,8 @@ function pageResultatNext(activityRootUrl, activityUrl) {
 		var mydb = new Mydb();
 		$('#content .row .prod_list a').each(function() {
 			//streamCompanies.write($(this).attr('href') + '\n');
-			mydb.writeCompanyUrl($(this).attr('href'));
+			//mydb.writeCompanyUrl($(this).attr('href'));
+			myDBworkers.writeCompanyUrl($(this).attr('href'));
 		});
 	});
 }

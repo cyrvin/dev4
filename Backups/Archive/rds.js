@@ -19,16 +19,6 @@ DatabaseConnection.prototype.writeCompanyUrl = function(companyUrl) {
 		}
 		console.log('writeCompanyUrl -> OK on ' + companyUrl);
 	});
-	// db.connect(function(err) {
-	// 	if (err) {
-	// 		console.log('writeCompanyUrl -> ERROR ON URL ' + companyUrl + ' : ' + err.stack); 
-	// 		return;
-	// 	}
-	// 	var value = {url: companyUrl};
-	// 	db.query('INSERT IGNORE INTO companyUrls SET ? ', value, function(err, result) {
-	// 		console.log('writeCompanyUrl -> OK on ' + companyUrl);
-	// 	});
-	// });
 }
 
 module.exports = DatabaseConnection;
