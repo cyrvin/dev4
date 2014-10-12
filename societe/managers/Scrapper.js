@@ -18,7 +18,7 @@ Scrapper.prototype.scrapCompagnies = function(depId) {
 
 
 
-	CompagniesByNafDepWorker(depId, );
+	// CompagniesByNafDepWorker(depId, );
 };
 
 module.exports = Scrapper;

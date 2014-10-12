@@ -1,4 +1,5 @@
-// http://www.societe.com/cgi-bin/liste?ape=0111Z&dep=1
+// http://www.societe.com/cgi-bin/liste?ape=0111Z&dep=1 mais que 1000 premiers résultats!!
+// Teste en passant par les dirigeants par recherche par année de naissance mais limitation à 2 enterprises 
 
 var request = require('request');
 var cheerio = require('cheerio');
