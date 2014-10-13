@@ -73,7 +73,7 @@ App.prototype.initUncaughtExceptionCatcher = function() {
 App.prototype.run = function() {
 	if (this.options.scrapperInit) {
 		console.log('Init scrap');
-		this.scrapper.scrapCompanies();
+		this.scrapper.scrapNafCodes();
 	}
 	var port = this.options.port;
 	this.server.listen(port);

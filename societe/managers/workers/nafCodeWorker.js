@@ -44,6 +44,9 @@ NafCodeWorker.prototype.scrapNafCodePage = function(index) {
 
 			var nafCode = new NafCodeModel(params);
 			nafCode.save(function(err) {
+				if (err) {
+					console.log('save naf code: ' + err);
+				}
 				codeDefer.resolve();
 			});
 

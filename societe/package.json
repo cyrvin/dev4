@@ -31,7 +31,8 @@
 		"mongodb": "*",
 		"async": "^0.9.0",
 		"cheerio": "^0.17.0",
-		"numeral": "*"
+		"numeral": "*",
+		"casperjs": "*"
 	},
 	"devDependencies": {}
 }
