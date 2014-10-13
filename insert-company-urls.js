@@ -1,7 +1,4 @@
 var mysql   = require('mysql');
-// var fs 		= require('fs');
-
-// var stream 	= fs.createWriteStream('./data/companies.txt');
 
 // var db = mysql.createConnection({
 // 	host     : process.env.RDS_HOSTNAME,
@@ -18,13 +15,13 @@ var db = mysql.createConnection({
 	database : 'kompass'
 });
 
-module.exports = function(fieldValue, callback) {
-	// stream.write(fieldValue + '\n');
-	// callback(null, fieldValue);
-
-	var value = {url: fieldValue};
+module.exports = function(companyUrl, activityUrl, callback) {
+	var value = {
+		url: companyUrl,
+		activityUrl: activityUrl
+	};
 	db.query('INSERT IGNORE INTO companyUrls SET ? ', value, function(err, result) {
-		if (err) 	callback(err, fieldValue)
-		else 		callback(null, fieldValue);
+		if (err) 	callback(err, companyUrl)
+		else 		callback(null, companyUrl);
 	});
 };

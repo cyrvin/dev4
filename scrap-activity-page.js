@@ -1,7 +1,7 @@
 var request 	= require('request');
 var cheerio 	= require('cheerio');
 var workerFarm 	= require('worker-farm')
-var insertIgnoreWorkers  = workerFarm(require.resolve('./rds-insert-ignore'));
+var insertCompanyUrlWorkers  = workerFarm(require.resolve('./insert-company-urls'));
 
 var nbEntriesPerPage = 80;
 
@@ -11,7 +11,7 @@ module.exports = function(activityUrl, callback) {
 	request(activityUrl, function(error, response, html) {
 		var $ = cheerio.load(html);
 		$('#content .row .prod_list a').each(function() {
-			insertIgnoreWorkers($(this).attr('href'), function(err, companyUrl){
+			insertCompanyUrlWorkers($(this).attr('href'), activityUrl, function(err, companyUrl){
 				if (err) console.log('ERROR insert' + err)
 				else console.log('OK insert ' + companyUrl);
 			});
@@ -37,7 +37,7 @@ function activityPageNext(activityRootUrl, activityUrl) {
 	request(activityUrl, function(error, response, html) {
 		var $ = cheerio.load(html);
 		$('#content .row .prod_list a').each(function() {
-			insertIgnoreWorkers($(this).attr('href'), function(err, companyUrl){
+			insertCompanyUrlWorkers($(this).attr('href'), activityUrl, function(err, companyUrl){
 				if (err) console.log('ERROR insert' + err)
 				else console.log('OK insert ' + companyUrl);
 			});

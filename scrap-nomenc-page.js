@@ -2,7 +2,7 @@ var request = require('request');
 var cheerio = require('cheerio');
 var workerFarm = require('worker-farm')
 
-var kompassActivityworkers = workerFarm(require.resolve('./k2_activite'));
+var kompassActivityworkers = workerFarm(require.resolve('./scrap-activity-page'));
 
 /*--------------------------- KompassNomenclature class ---------------------------*/
 
