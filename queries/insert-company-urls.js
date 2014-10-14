@@ -1,18 +1,12 @@
 var mysql   = require('mysql');
-
-// var db = mysql.createConnection({
-// 	host     : process.env.RDS_HOSTNAME,
-// 	user     : process.env.RDS_USERNAME,
-// 	password : process.env.RDS_PASSWORD,
-// 	port 	 : process.env.RDS_PORT,
-// 	database : 'ebdb'
-// });
+var config 	= require('../config/config');
 
 var db = mysql.createConnection({
-	host     : '127.0.0.1',
-	user     : 'root',
-	port 	 : '3306',
-	database : 'kompass'
+	host     : config.db.host,
+	user     : config.db.user,
+	password : config.db.password,
+	port 	 : config.db.port,
+	database : config.db.database
 });
 
 module.exports = function(companyUrl, activityUrl, callback) {

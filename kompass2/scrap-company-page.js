@@ -3,14 +3,7 @@ var cheerio = require('cheerio');
 var mysql   = require('mysql');
 
 var workerFarm 	= require('worker-farm')
-var genericInsertWorkers  = workerFarm(require.resolve('./insert-generic'));
-
-var db = mysql.createConnection({
-	host     : '127.0.0.1',
-	user     : 'root',
-	port 	 : '3306',
-	database : 'kompass'
-});
+var genericInsertWorkers  = workerFarm(require.resolve('../queries/insert-ignore-generic'));
 
 module.exports = function(companyUrl, callback) {
 	console.log('Start companyPage : ' + companyUrl);

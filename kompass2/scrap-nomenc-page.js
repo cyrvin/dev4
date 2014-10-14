@@ -1,12 +1,12 @@
 var request = require('request');
 var cheerio = require('cheerio');
-var workerFarm = require('worker-farm')
 
-var kompassActivityworkers = workerFarm(require.resolve('./scrap-activity-page'));
+var workerFarm = require('worker-farm')
+var insertActivityUrls = workerFarm(require.resolve('../queries/insert-activity-urls'));
 
 /*--------------------------- KompassNomenclature class ---------------------------*/
 
-var KompassNomenclature = function() {};
+var KompassNomenclature = function(){};
 
 KompassNomenclature.prototype.nomenclaturePage = function(countryCode) {
 
@@ -14,12 +14,9 @@ KompassNomenclature.prototype.nomenclaturePage = function(countryCode) {
 
 	request(nomPage, function(error, response, html) {
 		var $ = cheerio.load(html);
-		var length = $('#content > div > div > ul.categorie > li.span6 > a').length;
-		console.log(length);
-
-		// $('#content > div > div > ul.categorie > li.span6 > a').each(function() {
-		// 	pageNomenclatureN2('http://' + countryCode + '.kompass.com' + $(this).attr('href'));
-		// });
+		$('#content > div > div > ul.categorie > li.span6 > a').each(function() {
+			pageNomenclatureN2('http://' + countryCode + '.kompass.com' + $(this).attr('href'));
+		});
 	});
 }
 
@@ -31,10 +28,11 @@ function pageNomenclatureN2(nomenclatureUrl) {
 	request(nomenclatureUrl, function(error, response, html) {
 		var $ = cheerio.load(html);
 		$('#content > div > div > div > div.tab-content.pull-right > div.tab-pane > ul > li > a').each(function() {
-			kompassActivityworkers($(this).attr('href'), function(err, outp) {
+			insertActivityUrls($(this).attr('href'), function(err, outp) {
 				if (err) console.log(err)
-				else console.log('Terminé : ' + outp);
+				else console.log('Terminé : ' + outp + ' activity pages enregistrées');
 			});
 		});
 	});
 }
+

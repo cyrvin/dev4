@@ -1,33 +1,18 @@
 var express = require("express");
-var KompassNomenclature = require('./scrap-nomenc-page');
-var KompassNomenclature2 = require('./scrap-nomenc-page-2');
+var db = require('./kompass/rdsdb');
 
-var workerFarm = require('worker-farm')
-var kompassActivityworkers 	= workerFarm(require.resolve('./scrap-activity-page'));
-var kompassCompanyworkers 	= workerFarm(require.resolve('./scrap-company-page'));
+// var KompassNomenclature = require('./kompass/scrap-nomenc-page');
+// var KompassNomenclature2 = require('./kompass/scrap-nomenc-page-2');
 
-var mysql   = require('mysql');
-var db = mysql.createConnection({
-	host     : '127.0.0.1',
-	user     : 'root',
-	port 	 : '3306',
-	database : 'kompass'
-});
-
-var rdsDB = mysql.createConnection({
-	host     : 'kompassinstance.c4lm73gtthy1.eu-west-1.rds.amazonaws.com',
-	user     : 'cyrille',
-	password : 'moimoimoi',
-	port 	 : '3306',
-	database : 'kompass'
-});
+// var workerFarm = require('worker-farm')
+// var kompassActivityworkers 	= workerFarm(require.resolve('./kompass/scrap-activity-page'));
+// var kompassCompanyworkers 	= workerFarm(require.resolve('./kompass/scrap-company-page'));
 
 /*------------------- CONFIG EXPRESS ------------------*/
 
 var app = express();
 
-//var port = Number(process.env.PORT || 5000);
-var port = 5001;
+var port = Number(process.env.PORT || 5000);
 
 app.listen(port, function() {
 	console.log("Listening on " + port);
@@ -42,18 +27,6 @@ app.get('/', function(req, res) {
 });
 
 /*--------------- SCRAP KOMPASS ---------------------------*/
-
-app.get('/test', function(req, res) {
-	res.send('connard');
-	var value = {
-		url: 'Test1',
-		activityUrl: 'Test2'
-	};
-	rdsDB.query('INSERT IGNORE INTO companyUrls SET ? ', value, function(err, result) {
-		console.log(err);
-		console.log(result);
-	});
-});
 
 app.get('/kompass/scrapnomenclature/', function(req, res) {
 	if (req.query.country == undefined) {

@@ -1,3 +1,4 @@
 .elasticbeanstalk/
 data
 node_modules
+config
