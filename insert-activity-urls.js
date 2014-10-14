@@ -10,7 +10,7 @@ var db = mysql.createConnection({
 module.exports = function(activityUrl, callback) {
 	var value = {url: activityUrl};
 	db.query('INSERT IGNORE INTO activityUrls SET ? ', value, function(err, result) {
-		if (err) 	callback(err, activityUrl)
-		else 		callback(null, activityUrl);
+		console.log('ERREUR : ' , JSON.stringify(err));
+		console.log('RESULT : ', JSON.stringify(result));
 	});
 };

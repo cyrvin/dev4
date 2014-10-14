@@ -23,6 +23,7 @@
     "jsonfile": "^1.2.0",
     "logfmt": "^1.1.2",
     "pg": "^2.11.1",
-    "request": "^2.38.0"
+    "request": "^2.38.0",
+    "worker-farm": "*"
   }
 }

@@ -1,0 +1,38 @@
+{
+	"name": "scrapper-societe",
+	"preferGlobal": "false",
+	"version": "0.1.0",
+	"author": "David Schönfeld",
+	"description": "",
+	"contributors": [],
+	"engines": {
+		"node": "~0.10.29",
+		"npm": "~1.4.6"
+	},
+	"dependencies": {
+		"optimist": "*",
+		"express": "*",
+		"jade": "*",
+		"morgan": "*",
+		"body-parser": "*",
+		"method-override": "*",
+		"compression": "*",
+		"request": "*",
+		"plato": "*",
+		"underscore": "*",
+		"mocha": "*",
+		"assert": "*",
+		"q": "*",
+		"cron": "*",
+		"redis": "*",
+		"moment": "*",
+		"xml2js": "*",
+		"mongoose": "*",
+		"mongodb": "*",
+		"async": "^0.9.0",
+		"cheerio": "^0.17.0",
+		"numeral": "*",
+		"casperjs": "*"
+	},
+	"devDependencies": {}
+}

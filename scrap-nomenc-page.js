@@ -6,7 +6,7 @@ var kompassActivityworkers = workerFarm(require.resolve('./scrap-activity-page')
 
 /*--------------------------- KompassNomenclature class ---------------------------*/
 
-var KompassNomenclature = function(){};
+var KompassNomenclature = function() {};
 
 KompassNomenclature.prototype.nomenclaturePage = function(countryCode) {
 
@@ -14,9 +14,12 @@ KompassNomenclature.prototype.nomenclaturePage = function(countryCode) {
 
 	request(nomPage, function(error, response, html) {
 		var $ = cheerio.load(html);
-		$('#content > div > div > ul.categorie > li.span6 > a').each(function() {
-			pageNomenclatureN2('http://' + countryCode + '.kompass.com' + $(this).attr('href'));
-		});
+		var length = $('#content > div > div > ul.categorie > li.span6 > a').length;
+		console.log(length);
+
+		// $('#content > div > div > ul.categorie > li.span6 > a').each(function() {
+		// 	pageNomenclatureN2('http://' + countryCode + '.kompass.com' + $(this).attr('href'));
+		// });
 	});
 }
 
@@ -35,4 +38,3 @@ function pageNomenclatureN2(nomenclatureUrl) {
 		});
 	});
 }
-

@@ -14,6 +14,14 @@ var db = mysql.createConnection({
 	database : 'kompass'
 });
 
+var rdsDB = mysql.createConnection({
+	host     : 'kompassinstance.c4lm73gtthy1.eu-west-1.rds.amazonaws.com',
+	user     : 'cyrille',
+	password : 'moimoimoi',
+	port 	 : '3306',
+	database : 'kompass'
+});
+
 /*------------------- CONFIG EXPRESS ------------------*/
 
 var app = express();
@@ -34,6 +42,18 @@ app.get('/', function(req, res) {
 });
 
 /*--------------- SCRAP KOMPASS ---------------------------*/
+
+app.get('/test', function(req, res) {
+	res.send('connard');
+	var value = {
+		url: 'Test1',
+		activityUrl: 'Test2'
+	};
+	rdsDB.query('INSERT IGNORE INTO companyUrls SET ? ', value, function(err, result) {
+		console.log(err);
+		console.log(result);
+	});
+});
 
 app.get('/kompass/scrapnomenclature/', function(req, res) {
 	if (req.query.country == undefined) {
