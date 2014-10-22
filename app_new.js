@@ -1,8 +1,12 @@
 var express = require("express");
 var KompassNomenclature = require('./kompass2/scrap-nomenc-page');
+var ActivityScrapperIterator = require('./queries/activity-pages-iterator-no-worker');
 
-var workerFarm = require('worker-farm')
-var activityPageScrapper 	= workerFarm(require.resolve('./queries/activity-pages-iterator'));
+// var workerFarm = require('worker-farm');
+// var activityPageScrapper 	= workerFarm(require.resolve('./queries/activity-pages-iterator'));
+
+//var activityPageScrapperToFile 	= workerFarm(require.resolve('./queries/activity-pages-iterator-to-file'));
+//var testActivityScrapper = require('./kompass2/scrap-activity-page');
 
 var app = express();
 
@@ -29,9 +33,14 @@ app.get('/kompass/scrapnomenclature/', function(req, res) {
 	kompass.nomenclaturePage(req.query.country);
 });
 
-app.get('/kompass/scrapactivity/', function(req, res) {
-	activityPageScrapper(function(){
-		console.log('fini ?');
-	});
-});
+// app.get('/kompass/scrapactivity/', function(req, res) {
+// 	console.log('lancé');
+// 	activityPageScrapper();
+// 	setInterval(activityPageScrapper, 60000);
+// });
 
+app.get('/kompass/scrapactivity2/', function(req, res) {
+	var activityScrapper = new ActivityScrapperIterator();
+	activityScrapper.batchActivities();
+	//setInterval(activityScrapper.batchActivities, 10000);
+});

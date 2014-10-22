@@ -1,0 +1,126 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'graceful-fs' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.32
+4 warn package.json Dev4@0.0.0 No description
+5 warn package.json Dev4@0.0.0 No README data
+6 verbose readDependencies using package.json deps
+7 verbose cache add [ 'graceful-fs', null ]
+8 verbose cache add name=undefined spec="graceful-fs" args=["graceful-fs",null]
+9 verbose parsed url { protocol: null,
+9 verbose parsed url   slashes: null,
+9 verbose parsed url   auth: null,
+9 verbose parsed url   host: null,
+9 verbose parsed url   port: null,
+9 verbose parsed url   hostname: null,
+9 verbose parsed url   hash: null,
+9 verbose parsed url   search: null,
+9 verbose parsed url   query: null,
+9 verbose parsed url   pathname: 'graceful-fs',
+9 verbose parsed url   path: 'graceful-fs',
+9 verbose parsed url   href: 'graceful-fs' }
+10 silly lockFile 121d3819-graceful-fs graceful-fs
+11 verbose lock graceful-fs /Users/cyrille/.npm/121d3819-graceful-fs.lock
+12 silly lockFile 121d3819-graceful-fs graceful-fs
+13 silly lockFile 121d3819-graceful-fs graceful-fs
+14 verbose addNamed [ 'graceful-fs', '' ]
+15 verbose addNamed [ null, '*' ]
+16 silly lockFile f5c83b2f-graceful-fs graceful-fs@
+17 verbose lock graceful-fs@ /Users/cyrille/.npm/f5c83b2f-graceful-fs.lock
+18 silly addNameRange { name: 'graceful-fs', range: '*', hasData: false }
+19 verbose request where is /graceful-fs
+20 verbose request registry https://registry.npmjs.org/
+21 verbose request id ab4bab3fee8ccf04
+22 verbose url raw /graceful-fs
+23 verbose url resolving [ 'https://registry.npmjs.org/', './graceful-fs' ]
+24 verbose url resolved https://registry.npmjs.org/graceful-fs
+25 verbose request where is https://registry.npmjs.org/graceful-fs
+26 info trying registry request attempt 1 at 15:15:21
+27 verbose etag "45M7M12CNMFW1XVQTU3A8HYAJ"
+28 http GET https://registry.npmjs.org/graceful-fs
+29 http 200 https://registry.npmjs.org/graceful-fs
+30 silly registry.get cb [ 200,
+30 silly registry.get   { date: 'Thu, 16 Oct 2014 13:15:21 GMT',
+30 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R14B04)',
+30 silly registry.get     etag: '"9PV3CKHXC3191HOQIXV2QNLJO"',
+30 silly registry.get     'content-type': 'application/json',
+30 silly registry.get     'cache-control': 'max-age=60',
+30 silly registry.get     'content-length': '30285',
+30 silly registry.get     'accept-ranges': 'bytes',
+30 silly registry.get     via: '1.1 varnish',
+30 silly registry.get     age: '24',
+30 silly registry.get     'x-served-by': 'cache-lcy1126-LCY',
+30 silly registry.get     'x-cache': 'HIT',
+30 silly registry.get     'x-cache-hits': '2',
+30 silly registry.get     'x-timer': 'S1413465321.852873,VS0,VE0',
+30 silly registry.get     vary: 'Accept',
+30 silly registry.get     'keep-alive': 'timeout=10, max=50',
+30 silly registry.get     connection: 'Keep-Alive' } ]
+31 silly addNameRange number 2 { name: 'graceful-fs', range: '*', hasData: true }
+32 silly addNameRange versions [ 'graceful-fs',
+32 silly addNameRange   [ '1.0.0',
+32 silly addNameRange     '1.0.1',
+32 silly addNameRange     '1.0.2',
+32 silly addNameRange     '1.1.0',
+32 silly addNameRange     '1.1.1',
+32 silly addNameRange     '1.1.2',
+32 silly addNameRange     '1.1.3',
+32 silly addNameRange     '1.1.4',
+32 silly addNameRange     '1.1.5',
+32 silly addNameRange     '1.1.6',
+32 silly addNameRange     '1.1.7',
+32 silly addNameRange     '1.1.8',
+32 silly addNameRange     '1.1.9',
+32 silly addNameRange     '1.1.10',
+32 silly addNameRange     '1.1.11',
+32 silly addNameRange     '1.1.12',
+32 silly addNameRange     '1.1.13',
+32 silly addNameRange     '1.1.14',
+32 silly addNameRange     '1.2.0',
+32 silly addNameRange     '1.2.1',
+32 silly addNameRange     '1.2.2',
+32 silly addNameRange     '1.2.3',
+32 silly addNameRange     '2.0.0',
+32 silly addNameRange     '2.0.1',
+32 silly addNameRange     '2.0.2',
+32 silly addNameRange     '2.0.3',
+32 silly addNameRange     '3.0.0',
+32 silly addNameRange     '3.0.1',
+32 silly addNameRange     '3.0.2',
+32 silly addNameRange     '3.0.3',
+32 silly addNameRange     '3.0.4' ] ]
+33 verbose addNamed [ 'graceful-fs', '3.0.4' ]
+34 verbose addNamed [ '3.0.4', '3.0.4' ]
+35 silly lockFile fc361d82-graceful-fs-3-0-4 graceful-fs@3.0.4
+36 verbose lock graceful-fs@3.0.4 /Users/cyrille/.npm/fc361d82-graceful-fs-3-0-4.lock
+37 silly lockFile a3d8afc7-raceful-fs-graceful-fs-3-0-4-tgz https://registry.npmjs.org/graceful-fs/-/graceful-fs-3.0.4.tgz
+38 verbose lock https://registry.npmjs.org/graceful-fs/-/graceful-fs-3.0.4.tgz /Users/cyrille/.npm/a3d8afc7-raceful-fs-graceful-fs-3-0-4-tgz.lock
+39 verbose addRemoteTarball [ 'https://registry.npmjs.org/graceful-fs/-/graceful-fs-3.0.4.tgz',
+39 verbose addRemoteTarball   'a0306d9b0940e0fc512d33b5df1014e88e0637a3' ]
+40 info retry fetch attempt 1 at 15:15:22
+41 verbose fetch to= /var/folders/xg/m1zb35rj5374yrql6f012j540000gn/T/npm-32341-NULDa1tB/registry.npmjs.org/graceful-fs/-/graceful-fs-3.0.4.tgz
+42 http GET https://registry.npmjs.org/graceful-fs/-/graceful-fs-3.0.4.tgz
+43 http 200 https://registry.npmjs.org/graceful-fs/-/graceful-fs-3.0.4.tgz
+44 silly lockFile a3d8afc7-raceful-fs-graceful-fs-3-0-4-tgz https://registry.npmjs.org/graceful-fs/-/graceful-fs-3.0.4.tgz
+45 silly lockFile a3d8afc7-raceful-fs-graceful-fs-3-0-4-tgz https://registry.npmjs.org/graceful-fs/-/graceful-fs-3.0.4.tgz
+46 silly lockFile fc361d82-graceful-fs-3-0-4 graceful-fs@3.0.4
+47 silly lockFile fc361d82-graceful-fs-3-0-4 graceful-fs@3.0.4
+48 silly lockFile f5c83b2f-graceful-fs graceful-fs@
+49 silly lockFile f5c83b2f-graceful-fs graceful-fs@
+50 error Error: EACCES, mkdir '/Users/cyrille/.npm/graceful-fs/3.0.4'
+50 error  { [Error: EACCES, mkdir '/Users/cyrille/.npm/graceful-fs/3.0.4']
+50 error   errno: 3,
+50 error   code: 'EACCES',
+50 error   path: '/Users/cyrille/.npm/graceful-fs/3.0.4',
+50 error   parent: 'Dev4' }
+51 error Please try running this command again as root/Administrator.
+52 error System Darwin 13.4.0
+53 error command "node" "/usr/local/bin/npm" "install" "graceful-fs"
+54 error cwd /Users/cyrille/Documents/dev4
+55 error node -v v0.10.32
+56 error npm -v 1.4.28
+57 error path /Users/cyrille/.npm/graceful-fs/3.0.4
+58 error code EACCES
+59 error errno 3
+60 error stack Error: EACCES, mkdir '/Users/cyrille/.npm/graceful-fs/3.0.4'
+61 verbose exit [ 3, true ]

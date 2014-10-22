@@ -10,7 +10,5 @@ var db = mysql.createConnection({
 });
 
 module.exports = function(tableName, url, callback) {
-	db.query('UPDATE ' + tableName + ' SET scrapped = 1 WHERE url = ?', [url], function(err, result) {
-		callback(err, result);
-	});
+	db.query('UPDATE ' + tableName + ' SET scrapped = 1 WHERE url = ?', [url], function(err, result) {});
 };
