@@ -1,126 +1,193 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'graceful-fs' ]
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', '-g', 'xml2js' ]
 2 info using npm@1.4.28
 3 info using node@v0.10.32
-4 warn package.json Dev4@0.0.0 No description
-5 warn package.json Dev4@0.0.0 No README data
-6 verbose readDependencies using package.json deps
-7 verbose cache add [ 'graceful-fs', null ]
-8 verbose cache add name=undefined spec="graceful-fs" args=["graceful-fs",null]
-9 verbose parsed url { protocol: null,
-9 verbose parsed url   slashes: null,
-9 verbose parsed url   auth: null,
-9 verbose parsed url   host: null,
-9 verbose parsed url   port: null,
-9 verbose parsed url   hostname: null,
-9 verbose parsed url   hash: null,
-9 verbose parsed url   search: null,
-9 verbose parsed url   query: null,
-9 verbose parsed url   pathname: 'graceful-fs',
-9 verbose parsed url   path: 'graceful-fs',
-9 verbose parsed url   href: 'graceful-fs' }
-10 silly lockFile 121d3819-graceful-fs graceful-fs
-11 verbose lock graceful-fs /Users/cyrille/.npm/121d3819-graceful-fs.lock
-12 silly lockFile 121d3819-graceful-fs graceful-fs
-13 silly lockFile 121d3819-graceful-fs graceful-fs
-14 verbose addNamed [ 'graceful-fs', '' ]
-15 verbose addNamed [ null, '*' ]
-16 silly lockFile f5c83b2f-graceful-fs graceful-fs@
-17 verbose lock graceful-fs@ /Users/cyrille/.npm/f5c83b2f-graceful-fs.lock
-18 silly addNameRange { name: 'graceful-fs', range: '*', hasData: false }
-19 verbose request where is /graceful-fs
-20 verbose request registry https://registry.npmjs.org/
-21 verbose request id ab4bab3fee8ccf04
-22 verbose url raw /graceful-fs
-23 verbose url resolving [ 'https://registry.npmjs.org/', './graceful-fs' ]
-24 verbose url resolved https://registry.npmjs.org/graceful-fs
-25 verbose request where is https://registry.npmjs.org/graceful-fs
-26 info trying registry request attempt 1 at 15:15:21
-27 verbose etag "45M7M12CNMFW1XVQTU3A8HYAJ"
-28 http GET https://registry.npmjs.org/graceful-fs
-29 http 200 https://registry.npmjs.org/graceful-fs
-30 silly registry.get cb [ 200,
-30 silly registry.get   { date: 'Thu, 16 Oct 2014 13:15:21 GMT',
-30 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R14B04)',
-30 silly registry.get     etag: '"9PV3CKHXC3191HOQIXV2QNLJO"',
-30 silly registry.get     'content-type': 'application/json',
-30 silly registry.get     'cache-control': 'max-age=60',
-30 silly registry.get     'content-length': '30285',
-30 silly registry.get     'accept-ranges': 'bytes',
-30 silly registry.get     via: '1.1 varnish',
-30 silly registry.get     age: '24',
-30 silly registry.get     'x-served-by': 'cache-lcy1126-LCY',
-30 silly registry.get     'x-cache': 'HIT',
-30 silly registry.get     'x-cache-hits': '2',
-30 silly registry.get     'x-timer': 'S1413465321.852873,VS0,VE0',
-30 silly registry.get     vary: 'Accept',
-30 silly registry.get     'keep-alive': 'timeout=10, max=50',
-30 silly registry.get     connection: 'Keep-Alive' } ]
-31 silly addNameRange number 2 { name: 'graceful-fs', range: '*', hasData: true }
-32 silly addNameRange versions [ 'graceful-fs',
-32 silly addNameRange   [ '1.0.0',
-32 silly addNameRange     '1.0.1',
-32 silly addNameRange     '1.0.2',
-32 silly addNameRange     '1.1.0',
-32 silly addNameRange     '1.1.1',
-32 silly addNameRange     '1.1.2',
-32 silly addNameRange     '1.1.3',
-32 silly addNameRange     '1.1.4',
-32 silly addNameRange     '1.1.5',
-32 silly addNameRange     '1.1.6',
-32 silly addNameRange     '1.1.7',
-32 silly addNameRange     '1.1.8',
-32 silly addNameRange     '1.1.9',
-32 silly addNameRange     '1.1.10',
-32 silly addNameRange     '1.1.11',
-32 silly addNameRange     '1.1.12',
-32 silly addNameRange     '1.1.13',
-32 silly addNameRange     '1.1.14',
-32 silly addNameRange     '1.2.0',
-32 silly addNameRange     '1.2.1',
-32 silly addNameRange     '1.2.2',
-32 silly addNameRange     '1.2.3',
-32 silly addNameRange     '2.0.0',
-32 silly addNameRange     '2.0.1',
-32 silly addNameRange     '2.0.2',
-32 silly addNameRange     '2.0.3',
-32 silly addNameRange     '3.0.0',
-32 silly addNameRange     '3.0.1',
-32 silly addNameRange     '3.0.2',
-32 silly addNameRange     '3.0.3',
-32 silly addNameRange     '3.0.4' ] ]
-33 verbose addNamed [ 'graceful-fs', '3.0.4' ]
-34 verbose addNamed [ '3.0.4', '3.0.4' ]
-35 silly lockFile fc361d82-graceful-fs-3-0-4 graceful-fs@3.0.4
-36 verbose lock graceful-fs@3.0.4 /Users/cyrille/.npm/fc361d82-graceful-fs-3-0-4.lock
-37 silly lockFile a3d8afc7-raceful-fs-graceful-fs-3-0-4-tgz https://registry.npmjs.org/graceful-fs/-/graceful-fs-3.0.4.tgz
-38 verbose lock https://registry.npmjs.org/graceful-fs/-/graceful-fs-3.0.4.tgz /Users/cyrille/.npm/a3d8afc7-raceful-fs-graceful-fs-3-0-4-tgz.lock
-39 verbose addRemoteTarball [ 'https://registry.npmjs.org/graceful-fs/-/graceful-fs-3.0.4.tgz',
-39 verbose addRemoteTarball   'a0306d9b0940e0fc512d33b5df1014e88e0637a3' ]
-40 info retry fetch attempt 1 at 15:15:22
-41 verbose fetch to= /var/folders/xg/m1zb35rj5374yrql6f012j540000gn/T/npm-32341-NULDa1tB/registry.npmjs.org/graceful-fs/-/graceful-fs-3.0.4.tgz
-42 http GET https://registry.npmjs.org/graceful-fs/-/graceful-fs-3.0.4.tgz
-43 http 200 https://registry.npmjs.org/graceful-fs/-/graceful-fs-3.0.4.tgz
-44 silly lockFile a3d8afc7-raceful-fs-graceful-fs-3-0-4-tgz https://registry.npmjs.org/graceful-fs/-/graceful-fs-3.0.4.tgz
-45 silly lockFile a3d8afc7-raceful-fs-graceful-fs-3-0-4-tgz https://registry.npmjs.org/graceful-fs/-/graceful-fs-3.0.4.tgz
-46 silly lockFile fc361d82-graceful-fs-3-0-4 graceful-fs@3.0.4
-47 silly lockFile fc361d82-graceful-fs-3-0-4 graceful-fs@3.0.4
-48 silly lockFile f5c83b2f-graceful-fs graceful-fs@
-49 silly lockFile f5c83b2f-graceful-fs graceful-fs@
-50 error Error: EACCES, mkdir '/Users/cyrille/.npm/graceful-fs/3.0.4'
-50 error  { [Error: EACCES, mkdir '/Users/cyrille/.npm/graceful-fs/3.0.4']
-50 error   errno: 3,
-50 error   code: 'EACCES',
-50 error   path: '/Users/cyrille/.npm/graceful-fs/3.0.4',
-50 error   parent: 'Dev4' }
-51 error Please try running this command again as root/Administrator.
-52 error System Darwin 13.4.0
-53 error command "node" "/usr/local/bin/npm" "install" "graceful-fs"
-54 error cwd /Users/cyrille/Documents/dev4
-55 error node -v v0.10.32
-56 error npm -v 1.4.28
-57 error path /Users/cyrille/.npm/graceful-fs/3.0.4
-58 error code EACCES
-59 error errno 3
-60 error stack Error: EACCES, mkdir '/Users/cyrille/.npm/graceful-fs/3.0.4'
-61 verbose exit [ 3, true ]
+4 verbose cache add [ 'xml2js', null ]
+5 verbose cache add name=undefined spec="xml2js" args=["xml2js",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'xml2js',
+6 verbose parsed url   path: 'xml2js',
+6 verbose parsed url   href: 'xml2js' }
+7 silly lockFile ad82ed2d-xml2js xml2js
+8 verbose lock xml2js /Users/cyrille/.npm/ad82ed2d-xml2js.lock
+9 silly lockFile ad82ed2d-xml2js xml2js
+10 silly lockFile ad82ed2d-xml2js xml2js
+11 verbose addNamed [ 'xml2js', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile f8b9c896-xml2js xml2js@
+14 verbose lock xml2js@ /Users/cyrille/.npm/f8b9c896-xml2js.lock
+15 silly addNameRange { name: 'xml2js', range: '*', hasData: false }
+16 verbose request where is /xml2js
+17 verbose request registry https://registry.npmjs.org/
+18 verbose request id 9366964361109657
+19 verbose url raw /xml2js
+20 verbose url resolving [ 'https://registry.npmjs.org/', './xml2js' ]
+21 verbose url resolved https://registry.npmjs.org/xml2js
+22 verbose request where is https://registry.npmjs.org/xml2js
+23 info trying registry request attempt 1 at 12:26:35
+24 verbose etag "CP0J2WGDYBOV9OGN22EHD5IRA"
+25 http GET https://registry.npmjs.org/xml2js
+26 http 200 https://registry.npmjs.org/xml2js
+27 silly registry.get cb [ 200,
+27 silly registry.get   { date: 'Fri, 07 Nov 2014 11:26:35 GMT',
+27 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+27 silly registry.get     etag: '"7RUWHNLGQSYCQMSMORUBJF6UW"',
+27 silly registry.get     'content-type': 'application/json',
+27 silly registry.get     'cache-control': 'max-age=60',
+27 silly registry.get     'content-length': '66815',
+27 silly registry.get     'accept-ranges': 'bytes',
+27 silly registry.get     via: '1.1 varnish',
+27 silly registry.get     age: '48',
+27 silly registry.get     'x-served-by': 'cache-lcy1131-LCY',
+27 silly registry.get     'x-cache': 'HIT',
+27 silly registry.get     'x-cache-hits': '4',
+27 silly registry.get     'x-timer': 'S1415359595.549989,VS0,VE0',
+27 silly registry.get     vary: 'Accept',
+27 silly registry.get     'keep-alive': 'timeout=10, max=50',
+27 silly registry.get     connection: 'Keep-Alive' } ]
+28 silly addNameRange number 2 { name: 'xml2js', range: '*', hasData: true }
+29 silly addNameRange versions [ 'xml2js',
+29 silly addNameRange   [ '0.1.0',
+29 silly addNameRange     '0.1.1',
+29 silly addNameRange     '0.1.2',
+29 silly addNameRange     '0.1.3',
+29 silly addNameRange     '0.1.4',
+29 silly addNameRange     '0.1.5',
+29 silly addNameRange     '0.1.6',
+29 silly addNameRange     '0.1.7',
+29 silly addNameRange     '0.1.8',
+29 silly addNameRange     '0.1.9',
+29 silly addNameRange     '0.1.10',
+29 silly addNameRange     '0.1.11',
+29 silly addNameRange     '0.1.12',
+29 silly addNameRange     '0.1.13',
+29 silly addNameRange     '0.1.14',
+29 silly addNameRange     '0.2.0',
+29 silly addNameRange     '0.2.1',
+29 silly addNameRange     '0.2.2',
+29 silly addNameRange     '0.2.3',
+29 silly addNameRange     '0.2.4',
+29 silly addNameRange     '0.2.5',
+29 silly addNameRange     '0.2.6',
+29 silly addNameRange     '0.2.7',
+29 silly addNameRange     '0.2.8',
+29 silly addNameRange     '0.4.0',
+29 silly addNameRange     '0.4.1',
+29 silly addNameRange     '0.4.2',
+29 silly addNameRange     '0.4.3',
+29 silly addNameRange     '0.4.4' ] ]
+30 verbose addNamed [ 'xml2js', '0.4.4' ]
+31 verbose addNamed [ '0.4.4', '0.4.4' ]
+32 silly lockFile fb0f8bf5-xml2js-0-4-4 xml2js@0.4.4
+33 verbose lock xml2js@0.4.4 /Users/cyrille/.npm/fb0f8bf5-xml2js-0-4-4.lock
+34 silly lockFile fb0f8bf5-xml2js-0-4-4 xml2js@0.4.4
+35 silly lockFile fb0f8bf5-xml2js-0-4-4 xml2js@0.4.4
+36 silly lockFile f8b9c896-xml2js xml2js@
+37 silly lockFile f8b9c896-xml2js xml2js@
+38 silly resolved [ { name: 'xml2js',
+38 silly resolved     description: 'Simple XML to JavaScript object converter.',
+38 silly resolved     keywords: [ 'xml', 'json' ],
+38 silly resolved     homepage: 'https://github.com/Leonidas-from-XIV/node-xml2js',
+38 silly resolved     version: '0.4.4',
+38 silly resolved     author:
+38 silly resolved      { name: 'Marek Kubica',
+38 silly resolved        email: 'marek@xivilization.net',
+38 silly resolved        url: 'http://xivilization.net' },
+38 silly resolved     contributors:
+38 silly resolved      [ [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object],
+38 silly resolved        [Object] ],
+38 silly resolved     main: './lib/xml2js',
+38 silly resolved     directories: { lib: './lib' },
+38 silly resolved     scripts: { test: 'zap' },
+38 silly resolved     repository:
+38 silly resolved      { type: 'git',
+38 silly resolved        url: 'https://github.com/Leonidas-from-XIV/node-xml2js.git' },
+38 silly resolved     dependencies: { sax: '0.6.x', xmlbuilder: '>=1.0.0' },
+38 silly resolved     devDependencies:
+38 silly resolved      { 'coffee-script': '>=1.7.1',
+38 silly resolved        zap: '>=0.2.6',
+38 silly resolved        docco: '>=0.6.2',
+38 silly resolved        diff: '>=1.0.8' },
+38 silly resolved     licenses: [ [Object] ],
+38 silly resolved     bugs: { url: 'https://github.com/Leonidas-from-XIV/node-xml2js/issues' },
+38 silly resolved     _id: 'xml2js@0.4.4',
+38 silly resolved     _shasum: '3111010003008ae19240eba17497b57c729c555d',
+38 silly resolved     _from: 'xml2js@',
+38 silly resolved     _npmVersion: '1.4.9',
+38 silly resolved     _npmUser: { name: 'leonidas', email: 'marek@xivilization.net' },
+38 silly resolved     maintainers: [ [Object] ],
+38 silly resolved     dist:
+38 silly resolved      { shasum: '3111010003008ae19240eba17497b57c729c555d',
+38 silly resolved        tarball: 'http://registry.npmjs.org/xml2js/-/xml2js-0.4.4.tgz' },
+38 silly resolved     _resolved: 'https://registry.npmjs.org/xml2js/-/xml2js-0.4.4.tgz',
+38 silly resolved     readme: 'ERROR: No README data found!' } ]
+39 info install xml2js@0.4.4 into /usr/local/lib
+40 info installOne xml2js@0.4.4
+41 verbose lib/node_modules/xml2js unbuild
+42 verbose tar unpack /Users/cyrille/.npm/xml2js/0.4.4/package.tgz
+43 silly lockFile e79cd0c1-sr-local-lib-node-modules-xml2js tar:///usr/local/lib/node_modules/xml2js
+44 verbose lock tar:///usr/local/lib/node_modules/xml2js /Users/cyrille/.npm/e79cd0c1-sr-local-lib-node-modules-xml2js.lock
+45 silly lockFile bf7716e9-lle-npm-xml2js-0-4-4-package-tgz tar:///Users/cyrille/.npm/xml2js/0.4.4/package.tgz
+46 verbose lock tar:///Users/cyrille/.npm/xml2js/0.4.4/package.tgz /Users/cyrille/.npm/bf7716e9-lle-npm-xml2js-0-4-4-package-tgz.lock
+47 silly gunzTarPerm modes [ '755', '644' ]
+48 error Error: EACCES, mkdir '/usr/local/lib/node_modules/xml2js'
+48 error  { [Error: EACCES, mkdir '/usr/local/lib/node_modules/xml2js']
+48 error   errno: 3,
+48 error   code: 'EACCES',
+48 error   path: '/usr/local/lib/node_modules/xml2js',
+48 error   fstream_type: 'Directory',
+48 error   fstream_path: '/usr/local/lib/node_modules/xml2js',
+48 error   fstream_class: 'DirWriter',
+48 error   fstream_stack:
+48 error    [ '/usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23',
+48 error      '/usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53',
+48 error      'Object.oncomplete (fs.js:107:15)' ] }
+49 error Please try running this command again as root/Administrator.
+50 error System Darwin 14.0.0
+51 error command "node" "/usr/local/bin/npm" "install" "-g" "xml2js"
+52 error cwd /Users/cyrille/Documents/dev4
+53 error node -v v0.10.32
+54 error npm -v 1.4.28
+55 error path /usr/local/lib/node_modules/xml2js
+56 error fstream_path /usr/local/lib/node_modules/xml2js
+57 error fstream_type Directory
+58 error fstream_class DirWriter
+59 error code EACCES
+60 error errno 3
+61 error stack Error: EACCES, mkdir '/usr/local/lib/node_modules/xml2js'
+62 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23
+62 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53
+62 error fstream_stack Object.oncomplete (fs.js:107:15)
+63 verbose exit [ 3, true ]

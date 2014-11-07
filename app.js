@@ -1,18 +1,14 @@
 var express = require("express");
-var db = require('./kompass/rdsdb');
-
-// var KompassNomenclature = require('./kompass/scrap-nomenc-page');
-// var KompassNomenclature2 = require('./kompass/scrap-nomenc-page-2');
-
-// var workerFarm = require('worker-farm')
-// var kompassActivityworkers 	= workerFarm(require.resolve('./kompass/scrap-activity-page'));
-// var kompassCompanyworkers 	= workerFarm(require.resolve('./kompass/scrap-company-page'));
-
-/*------------------- CONFIG EXPRESS ------------------*/
-
+var KompassNomenclature = require('./kompass2/scrap-nomenc-page');
+var CompanyPageScraper 	= require('./kompass2/scrap-company-page');
+var ActivityScrapperIterator = require('./queries/activity-pages-iterator-no-worker');
+var SocieteScraper = require('./societe2/scrapSocieteBySiren');
 var app = express();
 
+var data 	= require('fs').readFileSync('./societe2/useragentswitcher.xml');
+
 var port = Number(process.env.PORT || 5000);
+//var port = 5002;
 
 app.listen(port, function() {
 	console.log("Listening on " + port);
@@ -26,55 +22,32 @@ app.get('/', function(req, res) {
 	res.render('index.html');
 });
 
-/*--------------- SCRAP KOMPASS ---------------------------*/
-
 app.get('/kompass/scrapnomenclature/', function(req, res) {
 	if (req.query.country == undefined) {
 		console.log('Code pays manquant !');
-		return;}
+		return;}	
 
 	var kompass = new KompassNomenclature();
 	kompass.nomenclaturePage(req.query.country);
 });
 
-app.get('/kompass/scrapnomenclature2/', function(req, res) {
-	if (req.query.country == undefined) {
-		console.log('Code pays manquant !');
-		return;}
-
-	var kompass = new KompassNomenclature2();
-	kompass.nomenclaturePage2(req.query.country);
+app.get('/kompass/scrapactivity/', function(req, res) {
+	var activityScrapper = new ActivityScrapperIterator();
+	activityScrapper.batchActivities();
+	setInterval(activityScrapper.batchActivities, 60000);
 });
 
-app.get('/kompass/scrapcompanies/', function(req, res) {
-	if (req.query.country == undefined) {
-		console.log('Code pays manquant !');
-		return;}
-
-	var kompass = new Kompass();
-	kompass.iterateOnCompanyPages(req.query.country);
+app.get('/kompass/scrapcompany/', function(req, res) {
+	console.log('ok scrapcompany');
+	var companyPageScrapper = new CompanyPageScraper();
+	companyPageScrapper.batchActivities();
+	setInterval(companyPageScrapper.batchActivities, 60000);
 });
 
-app.get('/kompass/activitypages', function(req, res) {
-	var query = db.query('SELECT url FROM activityURls WHERE url NOT IN (SELECT DISTINCT activityUrl From companyUrls)');
-	query.on('error', function(err) { console.log('There was an error with MySQL'); });
-    query.on('result', function(result) {
-    	kompassActivityworkers(result.url, function(err, outp) {
-			if (err) console.log(err)
-			var bidon = outp;
-		});
-    });
-    query.on('end', function() { console.log('fini !!'); });
+app.get('/societe/', function(req, res) {
+	var societeScraper = new SocieteScraper();
+	societeScraper.testXml();
+	//setInterval(societeScraper.batchActivities, 1000);
 });
 
-app.get('/kompass/companypages', function(req, res) {
-	var query = db.query('SELECT url FROM companyUrls WHERE url NOT IN (SELECT url FROM companyPresentation)');
-	query.on('error', function(err) { console.log('There was an error with MySQL'); });
-    query.on('result', function(result) {
-    	kompassCompanyworkers(result.url, function(err, outp) {
-			if (err) console.log(err)
-			var bidon = outp;
-		});
-    });
-    query.on('end', function() { console.log('fini !!'); });
-});
+console.log(data); 

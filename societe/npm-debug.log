@@ -1,0 +1,180 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', '-g', 'optimist' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.32
+4 verbose cache add [ 'optimist', null ]
+5 verbose cache add name=undefined spec="optimist" args=["optimist",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'optimist',
+6 verbose parsed url   path: 'optimist',
+6 verbose parsed url   href: 'optimist' }
+7 silly lockFile b33bb364-optimist optimist
+8 verbose lock optimist /Users/cyrille/.npm/b33bb364-optimist.lock
+9 silly lockFile b33bb364-optimist optimist
+10 silly lockFile b33bb364-optimist optimist
+11 verbose addNamed [ 'optimist', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile 4b6c7f79-optimist optimist@
+14 verbose lock optimist@ /Users/cyrille/.npm/4b6c7f79-optimist.lock
+15 silly addNameRange { name: 'optimist', range: '*', hasData: false }
+16 verbose request where is /optimist
+17 verbose request registry https://registry.npmjs.org/
+18 verbose request id 61e8128660c5c5ff
+19 verbose url raw /optimist
+20 verbose url resolving [ 'https://registry.npmjs.org/', './optimist' ]
+21 verbose url resolved https://registry.npmjs.org/optimist
+22 verbose request where is https://registry.npmjs.org/optimist
+23 info trying registry request attempt 1 at 14:37:11
+24 verbose etag "9BQIH52KZEWZ1D7Q2SJ925GSA"
+25 http GET https://registry.npmjs.org/optimist
+26 http 304 https://registry.npmjs.org/optimist
+27 silly registry.get cb [ 304,
+27 silly registry.get   { date: 'Sun, 26 Oct 2014 13:37:11 GMT',
+27 silly registry.get     server: 'Apache',
+27 silly registry.get     via: '1.1 varnish',
+27 silly registry.get     'last-modified': 'Sun, 26 Oct 2014 13:37:11 GMT',
+27 silly registry.get     'cache-control': 'max-age=60',
+27 silly registry.get     etag: '"9BQIH52KZEWZ1D7Q2SJ925GSA"',
+27 silly registry.get     age: '45',
+27 silly registry.get     'x-served-by': 'cache-fra1223-FRA',
+27 silly registry.get     'x-cache': 'HIT',
+27 silly registry.get     'x-cache-hits': '1',
+27 silly registry.get     'x-timer': 'S1414330631.756420,VS0,VE0',
+27 silly registry.get     vary: 'Accept',
+27 silly registry.get     'content-length': '0',
+27 silly registry.get     'keep-alive': 'timeout=10, max=50',
+27 silly registry.get     connection: 'Keep-Alive' } ]
+28 verbose etag https://registry.npmjs.org/optimist from cache
+29 silly addNameRange number 2 { name: 'optimist', range: '*', hasData: true }
+30 silly addNameRange versions [ 'optimist',
+30 silly addNameRange   [ '0.0.1',
+30 silly addNameRange     '0.0.2',
+30 silly addNameRange     '0.0.4',
+30 silly addNameRange     '0.0.5',
+30 silly addNameRange     '0.0.6',
+30 silly addNameRange     '0.0.7',
+30 silly addNameRange     '0.1.0',
+30 silly addNameRange     '0.1.1',
+30 silly addNameRange     '0.1.2',
+30 silly addNameRange     '0.1.3',
+30 silly addNameRange     '0.1.4',
+30 silly addNameRange     '0.1.5',
+30 silly addNameRange     '0.1.6',
+30 silly addNameRange     '0.1.7',
+30 silly addNameRange     '0.1.8',
+30 silly addNameRange     '0.1.9',
+30 silly addNameRange     '0.0.3',
+30 silly addNameRange     '0.2.0',
+30 silly addNameRange     '0.2.1',
+30 silly addNameRange     '0.2.2',
+30 silly addNameRange     '0.2.3',
+30 silly addNameRange     '0.2.4',
+30 silly addNameRange     '0.2.5',
+30 silly addNameRange     '0.2.6',
+30 silly addNameRange     '0.2.7',
+30 silly addNameRange     '0.2.8',
+30 silly addNameRange     '0.3.0',
+30 silly addNameRange     '0.3.1',
+30 silly addNameRange     '0.3.3',
+30 silly addNameRange     '0.3.4',
+30 silly addNameRange     '0.3.5',
+30 silly addNameRange     '0.3.6',
+30 silly addNameRange     '0.3.7',
+30 silly addNameRange     '0.4.0',
+30 silly addNameRange     '0.5.0',
+30 silly addNameRange     '0.5.1',
+30 silly addNameRange     '0.5.2',
+30 silly addNameRange     '0.6.0',
+30 silly addNameRange     '0.6.1' ] ]
+31 verbose addNamed [ 'optimist', '0.6.1' ]
+32 verbose addNamed [ '0.6.1', '0.6.1' ]
+33 silly lockFile 0fc74eb8-optimist-0-6-1 optimist@0.6.1
+34 verbose lock optimist@0.6.1 /Users/cyrille/.npm/0fc74eb8-optimist-0-6-1.lock
+35 silly lockFile 0fc74eb8-optimist-0-6-1 optimist@0.6.1
+36 silly lockFile 0fc74eb8-optimist-0-6-1 optimist@0.6.1
+37 silly lockFile 4b6c7f79-optimist optimist@
+38 silly lockFile 4b6c7f79-optimist optimist@
+39 silly resolved [ { name: 'optimist',
+39 silly resolved     version: '0.6.1',
+39 silly resolved     description: 'Light-weight option parsing with an argv hash. No optstrings attached.',
+39 silly resolved     main: './index.js',
+39 silly resolved     dependencies: { wordwrap: '~0.0.2', minimist: '~0.0.1' },
+39 silly resolved     devDependencies: { hashish: '~0.0.4', tap: '~0.4.0' },
+39 silly resolved     scripts: { test: 'tap ./test/*.js' },
+39 silly resolved     repository:
+39 silly resolved      { type: 'git',
+39 silly resolved        url: 'http://github.com/substack/node-optimist.git' },
+39 silly resolved     keywords:
+39 silly resolved      [ 'argument',
+39 silly resolved        'args',
+39 silly resolved        'option',
+39 silly resolved        'parser',
+39 silly resolved        'parsing',
+39 silly resolved        'cli',
+39 silly resolved        'command' ],
+39 silly resolved     author:
+39 silly resolved      { name: 'James Halliday',
+39 silly resolved        email: 'mail@substack.net',
+39 silly resolved        url: 'http://substack.net' },
+39 silly resolved     license: 'MIT/X11',
+39 silly resolved     engine: { node: '>=0.4' },
+39 silly resolved     bugs: { url: 'https://github.com/substack/node-optimist/issues' },
+39 silly resolved     homepage: 'https://github.com/substack/node-optimist',
+39 silly resolved     _id: 'optimist@0.6.1',
+39 silly resolved     dist:
+39 silly resolved      { shasum: 'da3ea74686fa21a19a111c326e90eb15a0196686',
+39 silly resolved        tarball: 'http://registry.npmjs.org/optimist/-/optimist-0.6.1.tgz' },
+39 silly resolved     _from: 'optimist@',
+39 silly resolved     _npmVersion: '1.3.21',
+39 silly resolved     _npmUser: { name: 'substack', email: 'mail@substack.net' },
+39 silly resolved     maintainers: [ [Object] ],
+39 silly resolved     directories: {},
+39 silly resolved     _shasum: 'da3ea74686fa21a19a111c326e90eb15a0196686',
+39 silly resolved     _resolved: 'https://registry.npmjs.org/optimist/-/optimist-0.6.1.tgz',
+39 silly resolved     readme: 'ERROR: No README data found!' } ]
+40 info install optimist@0.6.1 into /usr/local/lib
+41 info installOne optimist@0.6.1
+42 verbose lib/node_modules/optimist unbuild
+43 verbose tar unpack /Users/cyrille/.npm/optimist/0.6.1/package.tgz
+44 silly lockFile b37849a0--local-lib-node-modules-optimist tar:///usr/local/lib/node_modules/optimist
+45 verbose lock tar:///usr/local/lib/node_modules/optimist /Users/cyrille/.npm/b37849a0--local-lib-node-modules-optimist.lock
+46 silly lockFile ccf11c33-e-npm-optimist-0-6-1-package-tgz tar:///Users/cyrille/.npm/optimist/0.6.1/package.tgz
+47 verbose lock tar:///Users/cyrille/.npm/optimist/0.6.1/package.tgz /Users/cyrille/.npm/ccf11c33-e-npm-optimist-0-6-1-package-tgz.lock
+48 silly gunzTarPerm modes [ '755', '644' ]
+49 error Error: EACCES, mkdir '/usr/local/lib/node_modules/optimist'
+49 error  { [Error: EACCES, mkdir '/usr/local/lib/node_modules/optimist']
+49 error   errno: 3,
+49 error   code: 'EACCES',
+49 error   path: '/usr/local/lib/node_modules/optimist',
+49 error   fstream_type: 'Directory',
+49 error   fstream_path: '/usr/local/lib/node_modules/optimist',
+49 error   fstream_class: 'DirWriter',
+49 error   fstream_stack:
+49 error    [ '/usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23',
+49 error      '/usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53',
+49 error      'Object.oncomplete (fs.js:107:15)' ] }
+50 error Please try running this command again as root/Administrator.
+51 error System Darwin 14.0.0
+52 error command "node" "/usr/local/bin/npm" "install" "-g" "optimist"
+53 error cwd /Users/cyrille/Documents/dev4/societe
+54 error node -v v0.10.32
+55 error npm -v 1.4.28
+56 error path /usr/local/lib/node_modules/optimist
+57 error fstream_path /usr/local/lib/node_modules/optimist
+58 error fstream_type Directory
+59 error fstream_class DirWriter
+60 error code EACCES
+61 error errno 3
+62 error stack Error: EACCES, mkdir '/usr/local/lib/node_modules/optimist'
+63 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23
+63 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53
+63 error fstream_stack Object.oncomplete (fs.js:107:15)
+64 verbose exit [ 3, true ]

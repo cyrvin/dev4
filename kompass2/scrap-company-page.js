@@ -1,12 +1,33 @@
 var request = require('request');
 var cheerio = require('cheerio');
 var mysql   = require('mysql');
+var config 	= require('../config/config');
 
-var workerFarm 	= require('worker-farm')
-var genericInsertWorkers  = workerFarm(require.resolve('../queries/insert-ignore-generic'));
+var db = mysql.createConnection({
+	host     : config.local_db.host,
+	user     : config.local_db.user,
+	password : config.local_db.password,
+	port 	 : config.local_db.port,
+	database : config.local_db.database
+});
 
-module.exports = function(companyUrl, callback) {
-	console.log('Start companyPage : ' + companyUrl);
+var CompanyPageScraper = function(){};
+
+CompanyPageScraper.prototype.batchActivities = function() {
+	var query = db.query('SELECT url FROM companyUrls'
+		+ ' WHERE url NOT IN (SELECT url FROM companyPresentation)'
+		+ ' AND scrapped IS NULL'
+//		+ ' ORDER BY url DESC'
+		+ ' LIMIT 1000');
+	query.on('error', function(err) { console.log('QUERY ERROR : ' + JSON.stringify(err))});
+    query.on('result', function(result) {
+		scrapeCompanyPage(result.url);
+		db.query('UPDATE companyUrls SET scrapped = 1 WHERE url = ?', [result.url], function(err, result) {});
+	});
+    query.on('end', function() {});
+};
+
+ var scrapeCompanyPage = function(companyUrl) {
 	var error = null;
 
 	request(companyUrl, function(error, response, html) {
@@ -20,9 +41,7 @@ module.exports = function(companyUrl, callback) {
 				line: i++,
 				address: $(this).text().trim()
 			};
-			genericInsertWorkers('companyAddress', value, function(err, companyUrl){
-				if (err) console.log('ERROR insert address on ' + companyUrl + ' : ' + err)
-			});
+			db.query('INSERT IGNORE INTO companyAddress SET ? ', value, function(err, result) {});
 		});
 
 		//Telephone
@@ -31,9 +50,7 @@ module.exports = function(companyUrl, callback) {
 				url: companyUrl,
 				tel: $(this).text().trim()
 			};
-			genericInsertWorkers('companyTel', value, function(err, companyUrl){
-				if (err) console.log('ERROR insert tel on ' + companyUrl + ' : ' + err)
-			});
+			db.query('INSERT IGNORE INTO companyTel SET ? ', value, function(err, result) {});
 		});
 
 		//Presentation
@@ -42,9 +59,8 @@ module.exports = function(companyUrl, callback) {
 				url: companyUrl,
 				presentation: $(this).text().replace(/(?:(?:\r\n|\r|\n)\s*){2,}/ig, "").trim()
 			};
-			genericInsertWorkers('companyPresentation', value, function(err, companyUrl){
-				if (err) console.log('ERROR insert tel on ' + companyUrl + ' : ' + err)
-			});
+			db.query('INSERT IGNORE INTO companyPresentation SET ? ', value, function(err, result) {});
+			console.log('write company details for ' + companyUrl);
 		});
 
 		//Informations generales
@@ -57,9 +73,7 @@ module.exports = function(companyUrl, callback) {
 				infoType: typeInfo,
 				infoValue: valueInfo
 			};
-			genericInsertWorkers('companyInformation', value, function(err, companyUrl){
-				if (err) console.log('ERROR insert tel on ' + companyUrl + ' : ' + err)
-			});
+			db.query('INSERT IGNORE INTO companyInformation SET ? ', value, function(err, result) {});
 		});
 
 		//Chiffres-clefs : effectifs et CA
@@ -69,9 +83,7 @@ module.exports = function(companyUrl, callback) {
 				infoType: $(this).children('header').text().trim(),
 				infoValue: $(this).children('.number').text().trim()
 			};
-			genericInsertWorkers('companyInformation', value, function(err, companyUrl){
-				if (err) console.log('ERROR insert tel on ' + companyUrl + ' : ' + err)
-			});
+			db.query('INSERT IGNORE INTO companyInformation SET ? ', value, function(err, result) {});
 		});
 
 		//Main Activities - Niveau 1
@@ -82,9 +94,7 @@ module.exports = function(companyUrl, callback) {
 				rank: 'P',
 				role: parseRole($(this).children('ins').text().trim())
 			};
-			genericInsertWorkers('companyActivities', value, function(err, companyUrl){
-				if (err) console.log('ERROR insert tel on ' + companyUrl + ' : ' + err)
-			});
+			db.query('INSERT IGNORE INTO companyActivities SET ? ', value, function(err, result) {});
 		});
 
 		//Main Activities - Niveau 2
@@ -95,9 +105,7 @@ module.exports = function(companyUrl, callback) {
 				rank: 'P',
 				role: parseRole($(this).children('ins').text().trim())
 			};
-			genericInsertWorkers('companyActivities', value, function(err, companyUrl){
-				if (err) console.log('ERROR insert tel on ' + companyUrl + ' : ' + err)
-			});
+			db.query('INSERT IGNORE INTO companyActivities SET ? ', value, function(err, result) {});
 		});
 
 		//Secondary Activities - Niveau 1
@@ -108,9 +116,7 @@ module.exports = function(companyUrl, callback) {
 				rank: 'S',
 				role: parseRole($(this).children('ins').text().trim())
 			};
-			genericInsertWorkers('companyActivities', value, function(err, companyUrl){
-				if (err) console.log('ERROR insert tel on ' + companyUrl + ' : ' + err)
-			});
+			db.query('INSERT IGNORE INTO companyActivities SET ? ', value, function(err, result) {});
 		});
 
 		//Secondary Activities - Niveau 2
@@ -121,9 +127,17 @@ module.exports = function(companyUrl, callback) {
 				rank: 'S',
 				role: parseRole($(this).children('ins').text().trim())
 			};
-			genericInsertWorkers('companyActivities', value, function(err, companyUrl){
-				if (err) console.log('ERROR insert tel on ' + companyUrl + ' : ' + err)
-			});
+			db.query('INSERT IGNORE INTO companyActivities SET ? ', value, function(err, result) {});
+		});
+
+		//NAF
+		$('#tab-activities .activities.extra > p').each(function() {
+			var value = {
+				url: companyUrl,
+				infoType: $(this).children('strong').text().trim(),
+				infoValue: $(this).children('span').text().trim()
+			};
+			db.query('INSERT IGNORE INTO companyInformation SET ? ', value, function(err, result) {});
 		});
 
 		//Dirigeants et collaborateurs
@@ -134,14 +148,12 @@ module.exports = function(companyUrl, callback) {
 				lastName: $(this).children('.name').children('.lastName').text().trim(),
 				role: $(this).children('.fonction').text().trim()
 			};
-			genericInsertWorkers('companyContacts', value, function(err, companyUrl){
-				if (err) console.log('ERROR insert tel on ' + companyUrl + ' : ' + err)
-			});
+			db.query('INSERT IGNORE INTO companyContacts SET ? ', value, function(err, result) {});
 		});
 	});
-	
-	callback(null, companyUrl);
 }
+
+module.exports = CompanyPageScraper;
 
 /*------------------- Internal functions ----------------------------*/
 

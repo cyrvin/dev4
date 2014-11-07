@@ -3,22 +3,22 @@ var casper = require('casper').create({
 	stepTimeout: 10000,
 	waitTimeout: 1000,
 	pageSettings: {
-		loadImages: true,
-		loadPlugins: true
+		loadImages: false,
+		loadPlugins: false
 	},
 	onError: function() {
 		this.captureSelector('error.png', 'html');
 	},
-	logLevel: "debug"
+	logLevel: 'debug'
 });
 
 var siren = '522393511';
 
 casper.start('http://www.societe.com');
 
-casper.then(function() {
+casper.then(function() {	
 	if (this.exists('input#Search')) {
-		console.log('search filed');
+		console.log('search field');
 
 		this.fill('form#FormSearch', {
 			champ: siren
